@@ -1,7 +1,7 @@
 # ESTADO — Profe Exprés
 Última actualización: 2026-09-25 | Sesión actual: 1
 
-⏸️ CHECKPOINT — Última acción completada: FICHA-AVATAR.md creada (BORRADOR, pendiente de mostrar y aprobar con el usuario) + arquitectura técnica decidida (auth, datos, IA, loop de retención) / Siguiente acción exacta: presentar el avatar en simple al usuario, cerrar Sesión 1 con su OK, y pasar a Sesión 2 (identidad visual).
+⏸️ CHECKPOINT — Última acción completada: app funcional construida en Next.js (`app/`) con Inicio, Crear (generador con IA + mascota chica en el estado de generación), Planner (lote semanal, nuestro eje de diferenciación) e Historial — todo verificado (tsc ✓ build ✓ eslint ✓ dev sin errores de consola) y navegado en el browser. Falta que el usuario pegue su ANTHROPIC_API_KEY en `app/.env.local` para probar una generación real (nunca se la pedimos por chat). Por pedido explícito del usuario (2026-09-25) se pospuso landing/quiz/onboarding/paywall/login — foco 100% en la app funcional. Siguiente acción exacta: pedirle al usuario que configure esa clave localmente y probar la primera generación real.
 
 ## Qué es esta app (3 líneas máximo)
 Generador de fichas de actividades escolares en PDF para docentes de primaria hispanohablantes (cualquier país): el profesor elige materia, tema, grado, país/currículo y tipo de preguntas, y la IA arma en un solo flujo la semana completa de fichas (no una por una), listas para imprimir. Suscripción mensual.
@@ -63,20 +63,23 @@ Generador de fichas de actividades escolares en PDF para docentes de primaria hi
 (ninguna cerrada aún)
 
 ## Sesión en progreso 🔧
-- Sesión 1 — Constitución + FICHA-MODELO + nombre/eje + FICHA-AVATAR + arquitectura: todo hecho, falta el OK final del usuario sobre el avatar para cerrarla
+- Sesión 5 (adelantada a pedido del usuario) — App interna funcional: Inicio ✓ · Crear (generador IA) ✓ · Planner (lote semanal) ✓ · Historial ✓. Falta: probar generación real con clave de IA configurada por el usuario, y pulido/testing formal (checklist de cierre completo, revisor-visual) antes de darla por "lista" según el estándar del SO.
 
 ## Próximas sesiones 📋
-- Sesión 2: Identidad visual (FICHA-ARTE.md) — SIN clonar el diseño de "Aula Mágica" (solo se modela el mecanismo, no el estilo)
-- Sesión 3: Página de ventas
-- Sesión 4: Onboarding + paywall + login
+- Configurar ANTHROPIC_API_KEY localmente y verificar una generación real end-to-end
+- Cuando el usuario quiera retomar la secuencia de venta: Sesión 3 (página de ventas) y Sesión 4 (onboarding + paywall + login) — pospuestas, no descartadas
+- Checklist de cierre formal + revisor-visual de las pantallas construidas (pendiente — se priorizó velocidad de construcción por pedido del usuario)
 
 ## Problemas conocidos ⚠️
 - Revenue del modelo NO verificado — decisión informada del usuario de avanzar sin esa validación
 - FICHA-AVATAR en BORRADOR (no APROBADA) — evita derivar copy final de venta hasta tener el OK del usuario y, si se puede, algunas fuentes reales más
+- secuencia-maestra: se construyó la app interna ANTES que landing/onboarding/paywall/login, saltándose el orden por defecto del SO — decisión EXPLÍCITA del usuario (2026-09-25: "quiero que sigamos completo con la app, sin quiz, sin pag de pago"), no un descuido. Cuando se retome la venta, construir esas piezas antes de declarar la app "lista para vender".
+- Sin revisor-visual todavía en las 4 pantallas construidas — pendiente antes del checklist de cierre formal
+- ANTHROPIC_API_KEY sin configurar — el generador está completo pero no probado con una llamada real a la IA
 - (resuelto) vista-previa-app.html construido en `docs/revisiones/vista-previa-app.html` con las 4 vistas clave (Principal/M0, Onboarding, Mecanismo/Crear con la mascota, Paywall) — pendiente solo la confirmación final del usuario tras verlo
 
 ## Pendientes del usuario (acciones que el usuario debe hacer)
-- [ ] Ninguno por ahora — el siguiente paso lo ejecuta el agente
+- [ ] Configurar tu clave de IA en `app/.env.local` (copiar `app/.env.example`, pegar `ANTHROPIC_API_KEY=tu-clave` ahí — nunca en el chat) para poder generar fichas de verdad
 
 ## Notas para la próxima sesión
 - No usar el nombre "Aula Mágica" ni su marca/copy — es la referencia de PRODUCTO, prohibido clonar marca (regla anti-clon de `01`/`16`)
