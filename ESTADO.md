@@ -15,9 +15,12 @@ Generador de fichas de actividades escolares en PDF para docentes de primaria hi
 - Brecha LATAM confirmada: NO INVESTIGADO — el modelo YA tiene una versión "ES" genérica; nuestra diferenciación es el ÁNGULO (lote semanal), no el idioma
 - Precio de referencia del mercado: NO ENCONTRADO — pendiente de FICHA-MERCADO si se retoma la validación más adelante
 
-## Dirección de Arte (Sesión 2 — pendiente)
-- FICHA-ARTE.md: no existe aún
-- ¿Hubo referencia visual del usuario?: NO — "Aula Mágica" es referencia de PRODUCTO/mecanismo, no de estilo visual (no clonar su marca ni su diseño)
+## Dirección de Arte (Sesión 2 — réplica fiel construida, pendiente de aprobación final)
+- FICHA-ARTE.md: existe, tokens extraídos y test de fidelidad PASA
+- ¿Hubo referencia visual del usuario?: SÍ — 4 capturas (2 pantallas completas reales de "Aula Mágica" = CONTRATO de estilo, 1 mockup "Kalm" solo para energía de color, 1 mascota de cerebro animado a incorporar)
+- Resumen: fondo #FEFCFB · superficie #FFFFFF · acento #7B5DFB · 2ª nota #FB4A6E (mascota/celebraciones) · Display "Baloo 2" · Body "Nunito" · radio 20px cards / 14px botones
+- Réplica fiel construida en `docs/revisiones/replica-fiel.html` (2 pantallas: Inicio y Planner, cada una junto a su captura de referencia) — pendiente de aprobación del usuario
+- REGISTRO ANTI-REPETICIÓN: paleta #7B5DFB/#FB4A6E y par Baloo 2/Nunito quedan vetados para el próximo proyecto del SO
 
 ## Avatar y venta (Sesión 1 — BORRADOR, pendiente de aprobación del usuario)
 - FICHA-AVATAR.md: existe, en BORRADOR (no hay 10 frases VoC con fuente real — solo lo observado en el funnel del modelo + criterio razonado; se marcó explícitamente qué es observado y qué es derivado)
