@@ -70,7 +70,7 @@ Generador de fichas de actividades escolares en PDF para docentes de primaria hi
 - GitHub: `zonaamazonweb-dev/profe-expres` (privado) — remote configurado por SSH con una llave dedicada (`~/.ssh/id_ed25519_profeexpres`, solo push, no es una credencial de la cuenta)
 - Vercel: proyecto `yessenia3/profe-expres`, Root Directory `app`, Framework `Next.js` (se corrigió: había quedado en "Other" del primer import y causaba 404 — ver Problemas conocidos)
 - Variables configuradas en Vercel (Production/Preview/Development): `ANTHROPIC_API_KEY`, `AI_MODEL` — verificado con una generación real en producción (200 OK)
-- Deploy actual: manual vía `vercel deploy --prod` (CLI) porque se necesitaba corregir el framework antes del primer build correcto. PENDIENTE verificar que un push normal a `main` dispare un deploy automático (prueba P5/P8 de `62`) — no confirmado todavía
+- Deploy actual: manual vía `vercel deploy --prod` (CLI) porque se necesitaba corregir el framework antes del primer build correcto. CONFIRMADO: un push normal a `main` disparó un deploy automático sin intervención manual (2026-09-25)
 
 ## Próximas sesiones 📋
 - Configurar ANTHROPIC_API_KEY localmente y verificar una generación real end-to-end
