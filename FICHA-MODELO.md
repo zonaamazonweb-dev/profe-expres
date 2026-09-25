@@ -1,4 +1,4 @@
-# FICHA-MODELO — el plano de la app que ya gana — Aula Mágica (nuestra versión)
+# FICHA-MODELO — el plano de la app que ya gana — Profe Exprés (modela a Aula Mágica)
 (se llena en Sesión 1, ANTES de construir; cosa juzgada como las demás fichas)
 
 - Estado: BORRADOR (revenue no verificado por señales independientes — el usuario pidió avanzar directo a construcción sin más investigación de mercado; se documenta la mecánica del producto, que SÍ se verificó de primera mano navegando el funnel real)
@@ -33,10 +33,11 @@
 - Ángulo visible en el propio quiz (dato de primera mano, no de Ads Library): dolor = tiempo perdido en Word + trabajo llevado a casa; promesa = hasta 2h/día ahorradas
 
 ## 7. NUESTRO EJE ÚNICO DE DIFERENCIACIÓN
-- Eje que cambiamos: AUDIENCIA — enfoque en un país/currículo LATAM específico en vez de una versión ES genérica (el modelo ya tiene una versión "ES" sin diferenciar por país — ver Constitución más abajo para la decisión final con el usuario)
-- POR QUÉ solo ese: el mecanismo (formulario→PDF), la estructura de onboarding tipo quiz, y el momento del paywall ya están probados por el modelo — no hay que reinventarlos, solo aterrizarlos a un currículo/país concreto que el clon genérico en español no atiende con precisión
-- Qué CONSERVAMOS del modelo: estructura de onboarding (quiz de calificación + resultado personalizado + explicación del mecanismo) · momento del paywall (después de mostrar el mecanismo, antes/durante la primera generación real) · arquitectura de pricing (suscripción recurrente)
-- Nuestro mecanismo derivado: "el generador de fichas que SÍ conoce el plan de estudios de tu país" — pendiente de bautizar el nombre exacto en la Constitución (4b)
+- Eje que cambiamos: ÁNGULO — el usuario (2026-09-25) pidió NO especializar por país/audiencia; la app sirve a todo profesor hispanohablante. Descartada la especialización geográfica para no fragmentar el mercado. El país/currículo pasa a ser un SELECTOR dentro del producto (función), no una exclusividad de marca — así igualamos la promesa "según las reglas de tu país" del modelo sin clonar su posicionamiento genérico.
+  El eje real de diferenciación pasa a ser el MECANISMO: generación en LOTE (una semana completa de fichas en un solo flujo) en vez de una ficha a la vez — ataca el mismo dolor (tiempo) con más fuerza que el modelo, que genera de a una.
+- POR QUÉ solo ese: la estructura de onboarding, el momento del paywall y la arquitectura de pricing del modelo ya están probados — se conservan intactos. Cambiar el modo de generación (lote vs. individual) es UN solo eje, no dos: sigue siendo el mismo mecanismo "formulario → PDF con IA", solo con mayor rendimiento por sesión.
+- Qué CONSERVAMOS del modelo: estructura de onboarding (quiz de calificación + resultado personalizado + explicación del mecanismo) · momento del paywall (después de mostrar el mecanismo, en la primera generación real) · arquitectura de pricing (suscripción recurrente)
+- Nuestro mecanismo derivado: "el Generador Exprés" — arma en un solo flujo toda la semana de fichas del profesor, no una por una, alineadas al país/currículo que él mismo selecciona
 
 ## 8. A QUIÉN ALIMENTA ESTA FICHA
 - Constitución 4b de `01` (mecanismo) · `02B` (baseline de onboarding: quiz de 4 preguntas) · `02C` (baseline de pricing: suscripción, paywall post-mecanismo) · `19` (landing) · `34` (ángulos de ads) · `16` (identidad visual — Aula Mágica NO es referencia visual obligatoria, es referencia de PRODUCTO)

@@ -1,13 +1,13 @@
-# ESTADO — [Nombre pendiente de aprobación — propuesta: "Ficha Lista"]
+# ESTADO — Profe Exprés
 Última actualización: 2026-09-25 | Sesión actual: 1
 
-⏸️ CHECKPOINT — Última acción completada: FICHA-MODELO.md creada a partir del recorrido real del funnel de "Aula Mágica" (referencia) / Siguiente acción exacta: presentar Constitución del Producto + nombre + pregunta de país-currículo al usuario, esperar su OK, y llenar FICHA-AVATAR.md + decidir arquitectura (auth/datos/IA) para cerrar Sesión 1.
+⏸️ CHECKPOINT — Última acción completada: nombre aprobado ("Profe Exprés") y eje de diferenciación decidido (ÁNGULO: generación en LOTE de una semana completa, país/currículo como selector — no especialización geográfica, por pedido explícito del usuario) / Siguiente acción exacta: llenar FICHA-AVATAR.md y decidir arquitectura (auth/datos/IA) para cerrar Sesión 1, con el OK del usuario.
 
 ## Qué es esta app (3 líneas máximo)
-Generador de fichas de actividades escolares en PDF para docentes de primaria: el profesor elige materia, tema, grado y tipo de preguntas, y la IA arma la ficha completa (con texto de lectura si aplica) lista para imprimir, alineada al currículo de su país. Suscripción mensual.
+Generador de fichas de actividades escolares en PDF para docentes de primaria hispanohablantes (cualquier país): el profesor elige materia, tema, grado, país/currículo y tipo de preguntas, y la IA arma en un solo flujo la semana completa de fichas (no una por una), listas para imprimir. Suscripción mensual.
 
 ## Promesa central
-"Esta app ayuda a profesores de primaria en LATAM a tener fichas de actividades completas y listas para imprimir sin perder horas armándolas en Word, mediante un generador con IA alineado al plan de estudios de su país."
+"Esta app ayuda a profesores de primaria hispanohablantes a tener toda la semana de fichas de actividades lista para imprimir sin perder horas armándolas en Word, mediante un generador con IA que arma varias fichas de un solo flujo, alineadas al plan de estudios que el profesor elige."
 
 ## Reporte de validación (Sesión 1)
 - Veredicto: NO EJECUTADO — el usuario pidió saltar la investigación de mercado y avanzar directo a construcción (decisión suya, documentada 2026-09-25).
@@ -44,13 +44,13 @@ Generador de fichas de actividades escolares en PDF para docentes de primaria: e
 - Framework: Next.js — decidido 2026-09-25 (landing integrada + futuras rutas de API para el generador; regla del stack: "duda → Next.js")
 - Tipo de app (Gate 4 de `01`): formulario → documento — el tipo más seguro y barato de construir con IA
 - Modelo de IA: texto → documento estructurado (JSON con encabezado + preguntas) que luego se pinta en una plantilla PDF fija — proveedor concreto y arquitectura sync/async se deciden en la sesión de Integración de IA (`30`)
-- Eje único de diferenciación (regla del `01`): AUDIENCIA — especializar por país/currículo en vez de clonar una versión ES genérica — PENDIENTE de confirmar el país con el usuario (ver Constitución)
+- Eje único de diferenciación (regla del `01`): ÁNGULO — generación en LOTE (una semana completa de fichas en un solo flujo, no una por una) en vez de especializar por país. El país/currículo es un SELECTOR dentro del producto, no una exclusividad de marca — decidido 2026-09-25 a pedido del usuario (app para todo profesor hispanohablante, no de un país específico).
 
 ## Sesiones completadas ✅
 (ninguna cerrada aún)
 
 ## Sesión en progreso 🔧
-- Sesión 1 — Constitución del Producto + FICHA-MODELO (hecha) + país/currículo (pendiente OK del usuario) + FICHA-AVATAR + arquitectura
+- Sesión 1 — Constitución del Producto + FICHA-MODELO (hecha) + nombre y eje de diferenciación (hecho) + FICHA-AVATAR + arquitectura (pendiente)
 
 ## Próximas sesiones 📋
 - Sesión 1 (cierre): FICHA-AVATAR.md + monetización fina (trial/precio) + modelo de datos/RLS + método de auth
@@ -63,8 +63,9 @@ Generador de fichas de actividades escolares en PDF para docentes de primaria: e
 - El modelo ya tiene versión "ES" genérica — nuestro eje de diferenciación (país/currículo) es CRÍTICO para no competir como clon débil
 
 ## Pendientes del usuario (acciones que el usuario debe hacer)
-- [ ] Responder la pregunta de país/currículo + aprobar el nombre propuesto (ver mensaje de chat)
+- [ ] Ninguno por ahora — el siguiente paso lo ejecuta el agente
 
 ## Notas para la próxima sesión
 - No usar el nombre "Aula Mágica" ni su marca/copy — es la referencia de PRODUCTO, prohibido clonar marca (regla anti-clon de `01`/`16`)
 - La ficha de ejemplo de Matemática y de Língua Portuguesa vistas del modelo confirman: mezcla real de tipos de pregunta (desarrollo, opción múltiple, vocabulario, reflexión), no una lista plana — el generador de IA debe producir esa variedad, no preguntas repetidas
+- El selector de país/currículo (no la marca) es lo que hereda la promesa "según las reglas de tu país" del modelo — implementarlo como parte del formulario del generador, no como versión de marca separada
