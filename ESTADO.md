@@ -72,6 +72,7 @@ Generador de fichas de actividades escolares en PDF para docentes de primaria hi
 ## Problemas conocidos ⚠️
 - Revenue del modelo NO verificado — decisión informada del usuario de avanzar sin esa validación
 - FICHA-AVATAR en BORRADOR (no APROBADA) — evita derivar copy final de venta hasta tener el OK del usuario y, si se puede, algunas fuentes reales más
+- vista-previa-app.html (EL TOUR DE LA APP, 54) — pospuesto A PROPÓSITO: la doctrina lo construye DESPUÉS de que el usuario apruebe la réplica fiel ("Aprobada la réplica → EL TOUR DE LA APP"), y todavía está esperando esa respuesta (se le presentaron las 4 salidas: aprobar / ajustar / variantes / otra captura). En cuanto responda, se genera el tour con las 4-5 vistas clave (principal, onboarding, paywall, mecanismo) ya tematizadas. FICHA-ARTE.md queda con "Aprobada por el usuario: PENDIENTE" hasta entonces — no se cierra como cosa juzgada todavía.
 
 ## Pendientes del usuario (acciones que el usuario debe hacer)
 - [ ] Ninguno por ahora — el siguiente paso lo ejecuta el agente
