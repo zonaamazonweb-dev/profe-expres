@@ -19,7 +19,8 @@ Generador de fichas de actividades escolares en PDF para docentes de primaria hi
 - FICHA-ARTE.md: existe, tokens extraídos y test de fidelidad PASA
 - ¿Hubo referencia visual del usuario?: SÍ — 4 capturas (2 pantallas completas reales de "Aula Mágica" = CONTRATO de estilo, 1 mockup "Kalm" solo para energía de color, 1 mascota de cerebro animado a incorporar)
 - Resumen: fondo #FEFCFB · superficie #FFFFFF · acento #7B5DFB · 2ª nota #FB4A6E (mascota/celebraciones) · Display "Baloo 2" · Body "Nunito" · radio 20px cards / 14px botones
-- Réplica fiel construida en `docs/revisiones/replica-fiel.html` (2 pantallas: Inicio y Planner, cada una junto a su captura de referencia) — pendiente de aprobación del usuario
+- Réplica fiel construida en `docs/revisiones/replica-fiel.html` (2 pantallas: Inicio y Planner, cada una junto a su captura de referencia) — APROBADA por el usuario (2026-09-25), con ajuste: la mascota se movió de Inicio a la pantalla de Crear
+- Tour completo en `docs/revisiones/vista-previa-app.html` (Principal/M0, Onboarding, Mecanismo/Crear con mascota, Paywall)
 - REGISTRO ANTI-REPETICIÓN: paleta #7B5DFB/#FB4A6E y par Baloo 2/Nunito quedan vetados para el próximo proyecto del SO
 
 ## Avatar y venta (Sesión 1 — BORRADOR, pendiente de aprobación del usuario)
@@ -72,7 +73,7 @@ Generador de fichas de actividades escolares en PDF para docentes de primaria hi
 ## Problemas conocidos ⚠️
 - Revenue del modelo NO verificado — decisión informada del usuario de avanzar sin esa validación
 - FICHA-AVATAR en BORRADOR (no APROBADA) — evita derivar copy final de venta hasta tener el OK del usuario y, si se puede, algunas fuentes reales más
-- vista-previa-app.html (EL TOUR DE LA APP, 54) — pospuesto A PROPÓSITO: la doctrina lo construye DESPUÉS de que el usuario apruebe la réplica fiel ("Aprobada la réplica → EL TOUR DE LA APP"), y todavía está esperando esa respuesta (se le presentaron las 4 salidas: aprobar / ajustar / variantes / otra captura). En cuanto responda, se genera el tour con las 4-5 vistas clave (principal, onboarding, paywall, mecanismo) ya tematizadas. FICHA-ARTE.md queda con "Aprobada por el usuario: PENDIENTE" hasta entonces — no se cierra como cosa juzgada todavía.
+- (resuelto) vista-previa-app.html construido en `docs/revisiones/vista-previa-app.html` con las 4 vistas clave (Principal/M0, Onboarding, Mecanismo/Crear con la mascota, Paywall) — pendiente solo la confirmación final del usuario tras verlo
 
 ## Pendientes del usuario (acciones que el usuario debe hacer)
 - [ ] Ninguno por ahora — el siguiente paso lo ejecuta el agente

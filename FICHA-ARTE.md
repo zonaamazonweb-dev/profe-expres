@@ -18,7 +18,7 @@
 ## Identidad derivada — la "2ª nota" de color
 - La referencia (1)/(4) fija el acento primario (#7B5DFB). El usuario pidió además "colores vivos" y usar la mascota del cerebro → se toma como 2ª nota de color el coral/rosa vivo de esa mascota y del mockup Kalm: **#FB4A6E**
 - Uso de la 2ª nota: SOLO en la mascota, en celebraciones de hitos (ej. "10 semanas preparadas") y en el badge de "IA" — nunca reemplaza al acento primario en botones o navegación (regla 60-30-10)
-- Mascota: el cerebro animado se usa como "el asistente IA" de la app — aparece en el estado vacío de "Crear actividad" y en la pantalla de bienvenida del onboarding, con su color coral original (no se re-tiñe de morado, es la 2ª nota intencional)
+- Mascota: el cerebro animado es "el asistente IA" de la app — el usuario pidió (2026-09-25) que viva chico y feliz específicamente en la pantalla de CREAR actividad (el momento de generación con IA), no en el estado vacío de Inicio. Color coral original (no se re-tiñe de morado, es la 2ª nota intencional). Tamaño chico (~40-48px), como compañero junto al botón de generar / en el estado de "generando".
 
 ## Personalidad compilada
 - 3 adjetivos de personalidad: **cercana, eficiente, alentadora** (habla como una colega que te resuelve el problema, no como un software corporativo)
@@ -36,8 +36,9 @@
 ## Trazabilidad y vetos
 - Ruta de diseño: RÉPLICA FIEL de la referencia visual del usuario (capturas completas de Aula Mágica) + inserción de la mascota
 - Réplica fiel: `docs/revisiones/replica-fiel.html` · capturas de referencia archivadas en: `docs/revisiones/referencia-1-inicio.webp`, `docs/revisiones/referencia-4-planner.webp` · test de fidelidad: PASA (modo claro ✓ · hue lavanda/morado ✓ · clase tipográfica redondeada bold ✓ · radios ~20px ✓ · densidad comparable ✓ · sombras sutiles sin dureza ✓) — 0 desvíos
+- Tour de la app: `docs/revisiones/vista-previa-app.html` · vistas incluidas: Principal/M0, Onboarding, Mecanismo (Crear actividad, con la mascota chica y feliz), Paywall · aprobado por el usuario: PENDIENTE (se presenta ahora)
 - Paleta derivada de: referencia del usuario (acento primario) + mascota/Kalm (2ª nota) — tomada tal cual, sin perturbar el hue
 - Registro anti-repetición: paleta #7B5DFB/#FB4A6E + par Baloo 2/Nunito anotados en ESTADO.md → vetados para el próximo proyecto del SO
 - Modo (claro/oscuro) DERIVADO por: la propia referencia del usuario ya es modo claro — no se asumió, se copió
 
-## Idioma UI: español latino neutro · Fecha de cierre de la ficha: 2026-09-25 · Aprobada por el usuario: PENDIENTE (se presenta con la réplica fiel)
+## Idioma UI: español latino neutro · Fecha de cierre de la ficha: 2026-09-25 · Aprobada por el usuario: SÍ (2026-09-25) — con un ajuste: la mascota se mueve de "Inicio" a la pantalla de "Crear actividad", chica y feliz
