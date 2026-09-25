@@ -1,7 +1,7 @@
 # ESTADO — Profe Exprés
 Última actualización: 2026-09-25 | Sesión actual: 1
 
-⏸️ CHECKPOINT — Última acción completada: usuario configuró su ANTHROPIC_API_KEY y se probó la generación real end-to-end (2 fichas generadas: "Matemática · Fracciones" y "Ciencias Naturales · El ciclo del agua" con texto de comprensión lectora + 6 preguntas variadas de calidad). Se encontró y corrigió un bug real: "comprensión lectora" se enviaba como tipo de pregunta a la IA pero el validador no lo aceptaba como tal (rompía la generación con error 500) — se corrigió tratándolo como bandera de "incluir texto de lectura" en vez de tipo de pregunta, con una red de seguridad adicional. Build/tsc/eslint limpios tras el fix. Siguiente acción exacta: seguir construyendo/puliendo la app funcional (revisor-visual pendiente) o retomar cuando el usuario pida landing/onboarding/paywall/login.
+⏸️ CHECKPOINT — Última acción completada: app publicada y en línea en https://profe-expres.vercel.app (GitHub `zonaamazonweb-dev/profe-expres` privado, conectado a Vercel proyecto `yessenia3/profe-expres`). Verificado en producción: las 4 pantallas cargan (200 OK) y una generación real con IA funcionó de punta a punta. Siguiente acción exacta: ninguna pendiente — la app está funcional y pública. Retomar cuando el usuario quiera más pantallas/features o la secuencia de venta (landing/onboarding/paywall/login).
 
 ## Qué es esta app (3 líneas máximo)
 Generador de fichas de actividades escolares en PDF para docentes de primaria hispanohablantes (cualquier país): el profesor elige materia, tema, grado, país/currículo y tipo de preguntas, y la IA arma en un solo flujo la semana completa de fichas (no una por una), listas para imprimir. Suscripción mensual.
@@ -63,7 +63,14 @@ Generador de fichas de actividades escolares en PDF para docentes de primaria hi
 (ninguna cerrada aún)
 
 ## Sesión en progreso 🔧
-- Sesión 5 (adelantada a pedido del usuario) — App interna funcional: Inicio ✓ · Crear (generador IA) ✓ · Planner (lote semanal) ✓ · Historial ✓. Falta: probar generación real con clave de IA configurada por el usuario, y pulido/testing formal (checklist de cierre completo, revisor-visual) antes de darla por "lista" según el estándar del SO.
+- Sesión 5 (adelantada a pedido del usuario) — App interna funcional: Inicio ✓ · Crear (generador IA) ✓ · Planner (lote semanal) ✓ · Historial ✓ · Publicada en Vercel ✓. Falta: pulido/testing formal (checklist de cierre completo, revisor-visual) antes de darla por "lista" según el estándar del SO.
+
+## Publicación (Sesión 6, adelantada) — DEPLOY EN VIVO
+- URL de producción: https://profe-expres.vercel.app
+- GitHub: `zonaamazonweb-dev/profe-expres` (privado) — remote configurado por SSH con una llave dedicada (`~/.ssh/id_ed25519_profeexpres`, solo push, no es una credencial de la cuenta)
+- Vercel: proyecto `yessenia3/profe-expres`, Root Directory `app`, Framework `Next.js` (se corrigió: había quedado en "Other" del primer import y causaba 404 — ver Problemas conocidos)
+- Variables configuradas en Vercel (Production/Preview/Development): `ANTHROPIC_API_KEY`, `AI_MODEL` — verificado con una generación real en producción (200 OK)
+- Deploy actual: manual vía `vercel deploy --prod` (CLI) porque se necesitaba corregir el framework antes del primer build correcto. PENDIENTE verificar que un push normal a `main` dispare un deploy automático (prueba P5/P8 de `62`) — no confirmado todavía
 
 ## Próximas sesiones 📋
 - Configurar ANTHROPIC_API_KEY localmente y verificar una generación real end-to-end
@@ -75,7 +82,9 @@ Generador de fichas de actividades escolares en PDF para docentes de primaria hi
 - FICHA-AVATAR en BORRADOR (no APROBADA) — evita derivar copy final de venta hasta tener el OK del usuario y, si se puede, algunas fuentes reales más
 - secuencia-maestra: se construyó la app interna ANTES que landing/onboarding/paywall/login, saltándose el orden por defecto del SO — decisión EXPLÍCITA del usuario (2026-09-25: "quiero que sigamos completo con la app, sin quiz, sin pag de pago"), no un descuido. Cuando se retome la venta, construir esas piezas antes de declarar la app "lista para vender".
 - Sin revisor-visual todavía en las 4 pantallas construidas — pendiente antes del checklist de cierre formal
-- (resuelto) ANTHROPIC_API_KEY configurada por el usuario y generación real verificada (2026-09-25)
+- (resuelto) ANTHROPIC_API_KEY configurada por el usuario y generación real verificada (2026-09-25) — en local Y en producción
+- (resuelto) Al importar el repo en Vercel, el Framework Preset quedó en "Other" (por el primer intento antes de fijar Root Directory) y causaba 404 en toda la app aunque el build decía "Ready" — corregido con `vercel project update --framework nextjs`
+- (resuelto) Un `vercel link --yes` sin especificar proyecto creó un proyecto Vercel duplicado llamado "app" — se detectó y se eliminó antes de que causara confusión
 - (resuelto) vista-previa-app.html construido en `docs/revisiones/vista-previa-app.html` con las 4 vistas clave (Principal/M0, Onboarding, Mecanismo/Crear con la mascota, Paywall) — pendiente solo la confirmación final del usuario tras verlo
 
 ## Pendientes del usuario (acciones que el usuario debe hacer)
