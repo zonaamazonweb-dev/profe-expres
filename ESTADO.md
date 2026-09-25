@@ -1,7 +1,7 @@
 # ESTADO — Profe Exprés
 Última actualización: 2026-09-25 | Sesión actual: 1
 
-⏸️ CHECKPOINT — Última acción completada: app funcional construida en Next.js (`app/`) con Inicio, Crear (generador con IA + mascota chica en el estado de generación), Planner (lote semanal, nuestro eje de diferenciación) e Historial — todo verificado (tsc ✓ build ✓ eslint ✓ dev sin errores de consola) y navegado en el browser. Falta que el usuario pegue su ANTHROPIC_API_KEY en `app/.env.local` para probar una generación real (nunca se la pedimos por chat). Por pedido explícito del usuario (2026-09-25) se pospuso landing/quiz/onboarding/paywall/login — foco 100% en la app funcional. Siguiente acción exacta: pedirle al usuario que configure esa clave localmente y probar la primera generación real.
+⏸️ CHECKPOINT — Última acción completada: usuario configuró su ANTHROPIC_API_KEY y se probó la generación real end-to-end (2 fichas generadas: "Matemática · Fracciones" y "Ciencias Naturales · El ciclo del agua" con texto de comprensión lectora + 6 preguntas variadas de calidad). Se encontró y corrigió un bug real: "comprensión lectora" se enviaba como tipo de pregunta a la IA pero el validador no lo aceptaba como tal (rompía la generación con error 500) — se corrigió tratándolo como bandera de "incluir texto de lectura" en vez de tipo de pregunta, con una red de seguridad adicional. Build/tsc/eslint limpios tras el fix. Siguiente acción exacta: seguir construyendo/puliendo la app funcional (revisor-visual pendiente) o retomar cuando el usuario pida landing/onboarding/paywall/login.
 
 ## Qué es esta app (3 líneas máximo)
 Generador de fichas de actividades escolares en PDF para docentes de primaria hispanohablantes (cualquier país): el profesor elige materia, tema, grado, país/currículo y tipo de preguntas, y la IA arma en un solo flujo la semana completa de fichas (no una por una), listas para imprimir. Suscripción mensual.
@@ -75,11 +75,11 @@ Generador de fichas de actividades escolares en PDF para docentes de primaria hi
 - FICHA-AVATAR en BORRADOR (no APROBADA) — evita derivar copy final de venta hasta tener el OK del usuario y, si se puede, algunas fuentes reales más
 - secuencia-maestra: se construyó la app interna ANTES que landing/onboarding/paywall/login, saltándose el orden por defecto del SO — decisión EXPLÍCITA del usuario (2026-09-25: "quiero que sigamos completo con la app, sin quiz, sin pag de pago"), no un descuido. Cuando se retome la venta, construir esas piezas antes de declarar la app "lista para vender".
 - Sin revisor-visual todavía en las 4 pantallas construidas — pendiente antes del checklist de cierre formal
-- ANTHROPIC_API_KEY sin configurar — el generador está completo pero no probado con una llamada real a la IA
+- (resuelto) ANTHROPIC_API_KEY configurada por el usuario y generación real verificada (2026-09-25)
 - (resuelto) vista-previa-app.html construido en `docs/revisiones/vista-previa-app.html` con las 4 vistas clave (Principal/M0, Onboarding, Mecanismo/Crear con la mascota, Paywall) — pendiente solo la confirmación final del usuario tras verlo
 
 ## Pendientes del usuario (acciones que el usuario debe hacer)
-- [ ] Configurar tu clave de IA en `app/.env.local` (copiar `app/.env.example`, pegar `ANTHROPIC_API_KEY=tu-clave` ahí — nunca en el chat) para poder generar fichas de verdad
+- [ ] Ninguno por ahora — el siguiente paso lo ejecuta el agente
 
 ## Notas para la próxima sesión
 - No usar el nombre "Aula Mágica" ni su marca/copy — es la referencia de PRODUCTO, prohibido clonar marca (regla anti-clon de `01`/`16`)

@@ -36,16 +36,24 @@ export interface FichaGenerada {
 }
 
 function construirPrompt(params: GenerarFichaParams): string {
-  const tipos = params.tiposPregunta.join(", ");
+  const incluyeLectura = params.tiposPregunta.includes("comprension_lectora");
+  const tiposPregunta = params.tiposPregunta.filter((t) => t !== "comprension_lectora");
+  const tiposFinal = tiposPregunta.length > 0 ? tiposPregunta : ["desarrollo"];
+  const tipos = tiposFinal.join(", ");
+
   return `Eres un asistente pedagógico para docentes de primaria en países hispanohablantes.
 Genera el CONTENIDO de una ficha de actividad escolar para imprimir, en español neutro, alineada al plan de estudios de ${params.pais} para ${params.grado}.
 
 Materia: ${params.materia}
 Tema: ${params.tema}
-Tipos de pregunta a usar (mezcla real, no repitas el mismo tipo en todas): ${tipos}
 Cantidad total de preguntas: ${params.cantidadPreguntas}
 
-Si el tema requiere comprensión lectora, incluye un textoLectura breve (120-220 palabras) apropiado para la edad, y basa varias preguntas en él.
+IMPORTANTE sobre el campo "tipo" de cada pregunta: SOLO puede ser uno de estos 4 valores exactos:
+"opcion_multiple", "desarrollo", "completar", "vocabulario". "comprension_lectora" NO es un tipo de
+pregunta válido — nunca lo uses como valor de "tipo".
+
+Tipos de pregunta a usar (mezcla real entre estos, no repitas el mismo tipo en todas): ${tipos}
+${incluyeLectura ? `\nEsta ficha ES de comprensión lectora: incluye un textoLectura breve (120-220 palabras) apropiado para la edad, y basa la mayoría de las preguntas en él (usando los tipos de arriba, nunca "comprension_lectora" como tipo).` : ""}
 Las preguntas deben ser específicas al tema (nunca genéricas), variadas en dificultad, y apropiadas para el grado.
 
 Responde ÚNICAMENTE con JSON válido, sin texto adicional, con esta forma exacta:
@@ -97,6 +105,16 @@ export async function generarFicha(
     json = JSON.parse(match ? match[0] : texto);
   } catch {
     throw new Error("La IA devolvió un formato inesperado. Intenta de nuevo.");
+  }
+
+  // Red de seguridad: si la IA igual etiqueta una pregunta como "comprension_lectora"
+  // (no es un tipo válido, es la ficha entera la que ES de comprensión lectora),
+  // la normalizamos a "desarrollo" en vez de fallar toda la generación.
+  if (json && typeof json === "object" && Array.isArray((json as { preguntas?: unknown }).preguntas)) {
+    const conPreguntas = json as { preguntas: Array<{ tipo?: string }> };
+    for (const p of conPreguntas.preguntas) {
+      if (p.tipo === "comprension_lectora") p.tipo = "desarrollo";
+    }
   }
 
   const parsed = fichaGeneradaSchema.safeParse(json);
