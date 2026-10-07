@@ -28,12 +28,13 @@ Generador de fichas de actividades escolares en PDF para docentes de primaria hi
 - Resumen: "Vero", profesora de primaria 28-45 años, hispanohablante, Android gama media · dolor #1: no le alcanza el tiempo para armar el material de toda la semana · deseo #1: tener la semana completa de fichas lista de una sola vez · nivel de consciencia 3/5 · sofisticación media
 - Landing: sigue la ESTRUCTURA CANÓNICA de 10 secciones del 19 — pendiente de construir
 
-## Estrategia de monetización (Sesión 1 — DECIDIDO, no re-discutir sin motivo)
-- Modelo: Onboarding-first con preview anónimo → paywall → login (Modelo 2 de `02C`)
-- Justificación: nicho mapea a "Productividad"/"IA creativa" en la MATRIZ ESTRATÉGICA de `02C` — primera victoria = ver su primera ficha generada; el paywall funciona mejor DESPUÉS de que el profesor ya vio el mecanismo funcionando con su propio tema (igual que hace el modelo)
-- Diseño del paywall: aparece justo después de que el profesor genera/previsualiza su primera ficha real (con marca de agua o sin descarga habilitada) — bloquea la descarga limpia y el modo lote completo hasta suscribirse. Detalle fino en Sesión 4.
-- Trial: genera 1 ficha gratis sin trial de tiempo (tiempo-a-valor casi inmediato, no necesita ventana de días) — se revisa si conviene sumar trial de 5-7 días una vez haya datos reales
-- Pricing: $12-18/mes como rango de partida (benchmark informal de la categoría: MagicSchool AI, Twee) — se ajusta con FICHA-MERCADO si se retoma validación
+## Estrategia de monetización (REEMPLAZADA por instrucción explícita del usuario, 2026-10-07)
+- Modelo OBLIGATORIO: pago ANTES de usar. Sin preview, sin paywall, sin cuentas gratis. (Reemplaza el Modelo 2 "onboarding-first con preview → paywall" decidido en Sesión 1.)
+- Embudo: quiz corto → páginas de ventas POR SECCIONES (una pantalla a la vez con botón "Continuar", NO landing larga): resultado personalizado → la solución → prueba social → VSL (espacio reservado hasta que exista) → oferta (comparación, qué recibe, precio, garantía) → botón final DIRECTO al link de pago de Hotmart.
+- Tras el pago: webhook de Hotmart (firma verificada, idempotente) crea la cuenta → Resend manda el acceso. El login solo admite correos que ya pagaron.
+- Orden de construcción: quiz → páginas de ventas → Hotmart + cuenta automática + acceso → app → admin.
+- Siguiente paso pedido: PREPARAR LA INFRAESTRUCTURA DE USUARIOS (panel de administración).
+- Pricing: $12-18/mes como rango de partida (informal) — a definir antes de la página de oferta
 
 ## Secuencia maestra de construcción (NO saltar)
 - Estado de la secuencia: Sesión 1 (Constitución/Avatar/Arquitectura) casi cerrada
