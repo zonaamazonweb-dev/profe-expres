@@ -7,7 +7,7 @@ import { createClient } from "@supabase/supabase-js";
 import { createSessionClient } from "@/lib/supabase/server";
 import { getSupabaseConfig } from "@/lib/supabase/config";
 import { allow, clientIp } from "@/lib/rate-limit";
-import { logEvent } from "@/lib/telemetry";
+import { logError, logEvent } from "@/lib/telemetry";
 
 const emailSchema = z.string().trim().toLowerCase().pipe(z.email().max(254));
 const codeSchema = z.string().trim().regex(/^\d{6,8}$/);
@@ -47,7 +47,9 @@ export async function requestCode(_prev: LoginState, formData: FormData): Promis
     const next = safeNext(formData.get("next"));
     const emailRedirectTo = `${proto}://${host}/auth/finish?next=${encodeURIComponent(next)}`;
     // shouldCreateUser:false → solo entra quien ya tiene cuenta (pagó o fue agregada por el dueño).
-    await supabase.auth.signInWithOtp({ email, options: { shouldCreateUser: false, emailRedirectTo } });
+    const { error } = await supabase.auth.signInWithOtp({ email, options: { shouldCreateUser: false, emailRedirectTo } });
+    // El usuario ve siempre el mismo mensaje; el motivo real queda en el registro de errores del panel (Salud).
+    if (error) await logError(new Error(`login: ${error.status ?? ""} ${error.code ?? error.message}`), "login/envio-correo", { path: "/login" });
   } catch {
     // Respuesta idéntica exista o no el correo: no se revela quién tiene cuenta.
   }
