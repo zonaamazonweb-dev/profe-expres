@@ -26,6 +26,12 @@ describe("normalize", () => {
     expect(e.subscriberCode).toBe("SUB1");
     expect(e.intervalMonths).toBe(1);
   });
+  it("no cuenta una comisión que viene en otra moneda que el cobro", () => {
+    const e = normalize({ ...aprobada, data: { ...aprobada.data, commissions: [{ source: "MARKETPLACE", value: 0.65, currency_value: "USD" }] } })!;
+    expect(e.currency).toBe("USD");
+    const otra = normalize({ ...aprobada, data: { ...aprobada.data, purchase: { ...aprobada.data.purchase, price: { value: 27, currency_value: "PEN" } }, commissions: [{ source: "MARKETPLACE", value: 0.65, currency_value: "USD" }] } })!;
+    expect(otra.providerFeeMinor).toBeNull();
+  });
   it("rechaza lo que no es un aviso", () => {
     expect(normalize(null)).toBeNull();
     expect(normalize("hola")).toBeNull();

@@ -63,9 +63,13 @@ export function normalize(raw: unknown): HotmartEvent | null {
   const eventId = str(raw.id) ?? str(raw.event_id) ?? `${event}:${transactionId ?? email ?? "sin-id"}:${occurredAt.getTime()}`;
 
   const commissions = Array.isArray(at(data, "commissions")) ? (at(data, "commissions") as unknown[]) : [];
+  const currency = str(at(data, "purchase", "price", "currency_value"))?.toUpperCase() ?? null;
+  // Una comisión solo se cuenta si está en la MISMA moneda que el cobro; mezclar monedas falsearía la ganancia.
   const fee = (source: string) => {
     const hit = commissions.find((c) => isObj(c) && str(c.source)?.toUpperCase() === source);
-    return isObj(hit) ? toMinor(hit.value) : null;
+    if (!isObj(hit)) return null;
+    const feeCurrency = str(hit.currency_value)?.toUpperCase() ?? null;
+    return feeCurrency && currency && feeCurrency !== currency ? null : toMinor(hit.value);
   };
   const planName = str(at(data, "subscription", "plan", "name"));
   const origin = at(data, "purchase", "origin");
@@ -78,7 +82,7 @@ export function normalize(raw: unknown): HotmartEvent | null {
     name: str(at(data, "buyer", "name")),
     transactionId,
     amountMinor: toMinor(at(data, "purchase", "price", "value")),
-    currency: str(at(data, "purchase", "price", "currency_value"))?.toUpperCase() ?? null,
+    currency,
     offerCode: str(at(data, "purchase", "offer", "code")),
     source: isObj(origin) ? (str(origin.src) ?? str(origin.sck)) : null,
     providerFeeMinor: fee("MARKETPLACE"),
