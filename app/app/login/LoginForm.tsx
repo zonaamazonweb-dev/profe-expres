@@ -31,7 +31,7 @@ export function LoginForm({ next, errorEnlace }: { next: string; errorEnlace: bo
       </h1>
       <p className="mt-1 text-[13px] text-muted-foreground">
         {enPasoCodigo
-          ? `Te escribimos a ${email}. Abre el enlace del correo desde este mismo navegador. Si el correo trae un código, escríbelo abajo.`
+          ? `Te escribimos a ${email}. Abre el enlace del correo desde tu celular o computadora: funciona en cualquier navegador. Si el correo trae un código, escríbelo abajo.`
           : "Te enviamos un correo para entrar. Solo entran cuentas con acceso."}
       </p>
 

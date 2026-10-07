@@ -3,7 +3,9 @@
 import { redirect } from "next/navigation";
 import { headers } from "next/headers";
 import { z } from "zod";
+import { createClient } from "@supabase/supabase-js";
 import { createSessionClient } from "@/lib/supabase/server";
+import { getSupabaseConfig } from "@/lib/supabase/config";
 import { allow, clientIp } from "@/lib/rate-limit";
 import { logEvent } from "@/lib/telemetry";
 
@@ -18,8 +20,8 @@ export interface LoginState {
 
 /** Solo rutas internas: evita redirecciones abiertas hacia otros sitios tras iniciar sesión. */
 function safeNext(value: FormDataEntryValue | null): string {
-  const next = typeof value === "string" ? value : "/";
-  return next.startsWith("/") && !next.startsWith("//") && !next.includes("\\") ? next : "/";
+  const next = typeof value === "string" ? value : "/app";
+  return next.startsWith("/") && !next.startsWith("//") && !next.includes("\\") ? next : "/app";
 }
 
 export async function requestCode(_prev: LoginState, formData: FormData): Promise<LoginState> {
@@ -35,12 +37,15 @@ export async function requestCode(_prev: LoginState, formData: FormData): Promis
   }
 
   try {
-    const supabase = await createSessionClient();
+    // Flujo "implicit": el enlace del correo funciona en CUALQUIER navegador o celular (el PKCE exige abrirlo
+    // en el mismo navegador que lo pidió, y casi nadie lo hace: el correo se abre en la app de Gmail).
+    const { url, publishableKey } = getSupabaseConfig();
+    const supabase = createClient(url, publishableKey, { auth: { flowType: "implicit", persistSession: false, autoRefreshToken: false } });
     const h = await headers();
     const host = h.get("x-forwarded-host") ?? h.get("host") ?? "localhost:3000";
     const proto = h.get("x-forwarded-proto") ?? (host.startsWith("localhost") ? "http" : "https");
     const next = safeNext(formData.get("next"));
-    const emailRedirectTo = `${proto}://${host}/auth/callback?next=${encodeURIComponent(next)}`;
+    const emailRedirectTo = `${proto}://${host}/auth/finish?next=${encodeURIComponent(next)}`;
     // shouldCreateUser:false → solo entra quien ya tiene cuenta (pagó o fue agregada por el dueño).
     await supabase.auth.signInWithOtp({ email, options: { shouldCreateUser: false, emailRedirectTo } });
   } catch {

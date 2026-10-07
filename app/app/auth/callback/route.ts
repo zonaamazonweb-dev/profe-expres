@@ -3,7 +3,7 @@ import { createSessionClient } from "@/lib/supabase/server";
 import { logEvent } from "@/lib/telemetry";
 
 function safeNext(value: string | null): string {
-  return value && value.startsWith("/") && !value.startsWith("//") && !value.includes("\\") ? value : "/";
+  return value && value.startsWith("/") && !value.startsWith("//") && !value.includes("\\") ? value : "/app";
 }
 
 /** Recibe el enlace del correo (flujo PKCE): intercambia el código por una sesión en ESTE navegador. */

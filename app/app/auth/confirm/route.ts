@@ -6,7 +6,7 @@ import { logEvent } from "@/lib/telemetry";
 const TIPOS: EmailOtpType[] = ["magiclink", "email", "recovery", "invite"];
 
 function safeNext(value: string | null): string {
-  return value && value.startsWith("/") && !value.startsWith("//") && !value.includes("\\") ? value : "/";
+  return value && value.startsWith("/") && !value.startsWith("//") && !value.includes("\\") ? value : "/app";
 }
 
 /**
