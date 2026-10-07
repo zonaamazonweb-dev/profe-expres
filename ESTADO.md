@@ -96,6 +96,7 @@ PENDIENTE:
 - Checklist de cierre formal + revisor-visual de las pantallas construidas (pendiente — se priorizó velocidad de construcción por pedido del usuario)
 
 ## Problemas conocidos ⚠️
+- garantia POSPUESTA (2026-10-07): el copy de `/oferta` menciona garantía solo de forma condicionada: si `NEXT_PUBLIC_GUARANTEE_DAYS` está vacío NO dice ningún número ("Compra con respaldo", devoluciones según Hotmart). FICHA-MERCADO.md §4 tiene "Prueba elegida: 0 días" y "Garantía elegida: PENDIENTE" (decisión del dueño: 7/15/21/30). Hasta que la decida y se configure en Hotmart, la página no promete ningún plazo. Bloqueante antes de vender.
 - FICHA-MERCADO creada en BORRADOR (2026-10-07): precios de la competencia y reglas de Hotmart verificados con fuente; PRECIO y GARANTÍA siguen PENDIENTES de decisión del dueño (opciones de garantía en Hotmart: 7/15/21/30 días). Reconfirmar plazos y medios de pago en el panel/checkout REAL al crear el producto.
 - Revenue del modelo NO verificado — decisión informada del usuario de avanzar sin esa validación
 - FICHA-AVATAR en BORRADOR (no APROBADA) — evita derivar copy final de venta hasta tener el OK del usuario y, si se puede, algunas fuentes reales más
