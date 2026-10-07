@@ -79,7 +79,7 @@ Generador de fichas de actividades escolares en PDF para docentes de primaria hi
 - Checklist de cierre formal + revisor-visual de las pantallas construidas (pendiente — se priorizó velocidad de construcción por pedido del usuario)
 
 ## Problemas conocidos ⚠️
-- FICHA-MERCADO pospuesta A PROPÓSITO (decisión del usuario de saltar la investigación de mercado, 2026-09-25): precio, garantía, prueba y plazos NO están verificados contra Hotmart ni contra el mercado. Hoy la app no muestra ninguno de esos datos al público; el rango $12-18/mes es solo una referencia interna informal. Se crea FICHA-MERCADO.md (PLANTILLA-FICHA-MERCADO.md + protocolo de checkout real de 18) ANTES de construir la página de oferta del embudo — es bloqueante para esa etapa, no para el panel.
+- FICHA-MERCADO creada en BORRADOR (2026-10-07): precios de la competencia y reglas de Hotmart verificados con fuente; PRECIO y GARANTÍA siguen PENDIENTES de decisión del dueño (opciones de garantía en Hotmart: 7/15/21/30 días). Reconfirmar plazos y medios de pago en el panel/checkout REAL al crear el producto.
 - Revenue del modelo NO verificado — decisión informada del usuario de avanzar sin esa validación
 - FICHA-AVATAR en BORRADOR (no APROBADA) — evita derivar copy final de venta hasta tener el OK del usuario y, si se puede, algunas fuentes reales más
 - secuencia-maestra: se construyó la app interna ANTES que landing/onboarding/paywall/login, saltándose el orden por defecto del SO — decisión EXPLÍCITA del usuario (2026-09-25: "quiero que sigamos completo con la app, sin quiz, sin pag de pago"), no un descuido. Cuando se retome la venta, construir esas piezas antes de declarar la app "lista para vender".
