@@ -13,8 +13,8 @@ import { useTrackOnce } from "@/lib/funnel/track";
  * barra de progreso y captura de los parámetros del anuncio.
  */
 export function FunnelFrame({
-  progress, backHref, onBack, children, bare = false,
-}: { progress: number; backHref?: string; onBack?: () => void; children: React.ReactNode; bare?: boolean }) {
+  progress, backHref, onBack, children, bare = false, hideProgress = false,
+}: { hideProgress?: boolean; progress: number; backHref?: string; onBack?: () => void; children: React.ReactNode; bare?: boolean }) {
   useEffect(() => { captureAttribution(); }, []);
   useTrackOnce("funnel_view");
 
@@ -40,7 +40,7 @@ export function FunnelFrame({
             </div>
             <div className="w-11" />
           </div>
-          <div className="h-1.5 w-full" style={{ background: "var(--sunken)" }} role="progressbar" aria-valuemin={0} aria-valuemax={100} aria-valuenow={Math.round(progress)} aria-label="Avance">
+          <div className={`h-1.5 w-full ${hideProgress ? "invisible" : ""}`} style={{ background: "var(--sunken)" }} role="progressbar" aria-valuemin={0} aria-valuemax={100} aria-valuenow={Math.round(progress)} aria-label="Avance">
             <motion.div className="h-full rounded-r-full" style={{ background: "var(--primary)" }} initial={false} animate={{ width: `${progress}%` }} transition={{ duration: 0.4, ease: "easeOut" }} />
           </div>
         </header>

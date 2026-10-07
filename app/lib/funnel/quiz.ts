@@ -17,8 +17,8 @@ export const QUESTIONS: Question[] = [
     options: ["Casi nunca", "A veces", "Casi cada semana", "Siempre, hasta los fines de semana"] },
   { key: "visualizar", title: "Si recuperaras esas horas, ¿qué harías primero?",
     options: ["Descansar y desconectarme", "Estar más con mi familia", "Planificar mejor mis clases", "Dedicarme más a mis alumnos"] },
-  { key: "interes", title: "Si tuvieras la semana de fichas lista en minutos, ¿qué tan interesada estarías?",
-    options: ["Muchísimo, la necesito ya", "Bastante", "Me da curiosidad", "Todavía no estoy segura"] },
+  { key: "interes", title: "Si tuvieras la semana de fichas lista en minutos, ¿qué tanto te interesaría?",
+    options: ["Muchísimo, lo necesito ya", "Bastante", "Me da curiosidad", "Todavía no lo sé"] },
 ];
 
 const HORAS_MEDIAS = [0.5, 2, 4.5, 7]; // punto medio de cada rango de la pregunta 2

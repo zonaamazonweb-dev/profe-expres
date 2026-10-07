@@ -44,14 +44,14 @@ export function QuizFlow() {
   if (analyzing) return <Analysis onDone={() => router.push("/resultado")} complete={isComplete({ ...answers })} />;
 
   return (
-    <FunnelFrame progress={((step + 1) / (QUESTIONS.length + 1)) * 62} onBack={step > 0 ? () => setStep(step - 1) : undefined} backHref={step === 0 ? "/" : undefined}>
+    <FunnelFrame progress={(step / QUESTIONS.length) * 62 + 6} onBack={step > 0 ? () => setStep(step - 1) : undefined} backHref={step === 0 ? "/" : undefined}>
       <AnimatePresence mode="wait" initial={false}>
         <motion.section key={q.key} className="flex flex-1 flex-col gap-6"
           initial={reduce ? false : { opacity: 0, x: 24 }} animate={{ opacity: 1, x: 0 }} exit={reduce ? undefined : { opacity: 0, x: -24 }} transition={{ duration: 0.25, ease: "easeOut" }}>
           <div className="flex flex-col gap-2">
             <p className="text-[13px] font-extrabold text-muted-foreground">Pregunta {step + 1} de {QUESTIONS.length}</p>
             <H2>{q.title}</H2>
-            {q.hint && <p className="text-[15px] text-muted-foreground">{q.hint}</p>}
+            <p className="text-[15px] text-muted-foreground">{q.hint ?? "Con tus respuestas calculamos cuántas horas de tu año puedes recuperar."}</p>
           </div>
           <div role="radiogroup" aria-label={q.title} className="flex flex-col gap-3">
             {q.options.map((opt, i) => {
@@ -59,7 +59,7 @@ export function QuizFlow() {
               return (
                 <motion.button key={opt} type="button" role="radio" aria-checked={on} whileTap={{ scale: 0.98 }} transition={{ duration: 0.12 }}
                   onClick={() => choose(i)}
-                  className="flex min-h-14 w-full items-center justify-between gap-3 rounded-[14px] px-4 py-3 text-left text-[17px] font-bold"
+                  className="flex min-h-14 w-full items-center justify-between gap-3 rounded-[14px] px-4 py-3 text-left text-[17px] font-bold outline-none focus-visible:ring-4 focus-visible:ring-[color-mix(in_oklab,var(--primary)_35%,transparent)]"
                   style={{
                     background: on ? "color-mix(in oklab, var(--primary) 9%, var(--card))" : "var(--card)",
                     border: `2px solid ${on ? "var(--primary)" : "var(--border)"}`,

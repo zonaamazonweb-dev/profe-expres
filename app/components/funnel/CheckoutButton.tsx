@@ -7,7 +7,7 @@ import { withAttribution } from "@/lib/funnel/attribution";
 import { track } from "@/lib/funnel/track";
 
 /** Lleva al pago de Hotmart con los parámetros del anuncio. Sin link configurado se muestra apagado (nunca un botón muerto engañoso). */
-export function CheckoutButton({ where, children = "Quiero Profe Exprés" }: { where: string; children?: React.ReactNode }) {
+export function CheckoutButton({ where, children = "Quiero mi semana de fichas lista" }: { where: string; children?: React.ReactNode }) {
   const url = FUNNEL.checkoutUrl;
   if (!url) {
     return (

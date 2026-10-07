@@ -71,7 +71,7 @@ TERMINADO:
 - PDF: ahora incluye hoja de solucionario (solo docente) al final.
 - Tipos/lint/18 tests/build ✓. Capturas 375px en `docs/revisiones/embudo/` (sin desborde horizontal en las 6 pantallas).
 PENDIENTE:
-- Veredictos del revisor-visual: `docs/revisiones/embudo/{entrada,quiz,oferta}-veredicto.md` (revisar resultados y corregir).
+- Revisor-visual 1ª pasada (todas NO LISTA): entrada 27/40·12/20·copy 11/20 · quiz 29/40·14/20·copy 13/20 · oferta 27/40·14/20·copy 10/20 (veredictos en `docs/revisiones/embudo/`). Ya corregido: copy neutro en P5, barra alineada a 5 pasos, línea de "para qué", foco visible, CTA "Quiero mi semana de fichas lista", barra oculta en entrada. FALTA: escena de dolor (domingo en la noche) en el copy, mascota/anillo firma, profundidad (mesh/hairline), conteo animado de horas, CTA "Avísame cuando abra" mientras no haya link de pago, prueba real, precio y garantía con nombre (dependen del dueño). Segunda revisión pendiente.
 - Dueño: precio, moneda y modalidad; días de garantía; link de checkout; correo de soporte; video; testimonios reales (no hay usuarias aún). Páginas legales (términos/privacidad) sin crear.
 - Hotmart + webhook + cuenta automática + Resend + login solo para pagos: NO se tocó (el login actual solo admite cuentas ya creadas).
 - Variables de Supabase y de funnel aún no están en Vercel: producción no tiene el camino de venta funcionando con medición hasta subirlas y redeploy.

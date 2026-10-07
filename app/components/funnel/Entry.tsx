@@ -7,7 +7,7 @@ import { Accent, Cta, Eyebrow, H1, IconChip } from "./ui";
 
 export function Entry() {
   return (
-    <FunnelFrame progress={0}>
+    <FunnelFrame progress={0} hideProgress>
       <div className="stagger flex flex-1 flex-col gap-6">
         <div className="flex flex-col gap-3">
           <Eyebrow>Para profes de primaria</Eyebrow>
@@ -34,7 +34,7 @@ export function Entry() {
         </ul>
 
         <div className="mt-auto flex flex-col gap-3 pt-2">
-          <Cta href="/quiz">Empezar el quiz</Cta>
+          <Cta href="/quiz">Empezar mis 5 preguntas</Cta>
           <p className="text-center text-[13px] text-muted-foreground">Sin registro ni contraseña. Tus respuestas se quedan en tu navegador.</p>
         </div>
       </div>
