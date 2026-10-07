@@ -20,7 +20,7 @@ export function FunnelFrame({
 
   return (
     <div className="min-h-dvh" style={{ background: "var(--sunken)" }}>
-      <div className="mx-auto flex min-h-dvh w-full max-w-[450px] flex-col bg-background md:shadow-[0_0_80px_-30px_color-mix(in_oklab,var(--primary)_40%,transparent)]">
+      <div className="mx-auto flex min-h-dvh w-full max-w-[450px] flex-col bg-background bg-[radial-gradient(120%_40%_at_50%_0%,color-mix(in_oklab,var(--primary)_10%,transparent),transparent_70%)] bg-no-repeat md:shadow-[0_0_80px_-30px_color-mix(in_oklab,var(--primary)_40%,transparent)]">
         <header className="sticky top-0 z-20 bg-background/95 backdrop-blur">
           <div className="flex h-14 items-center gap-2 px-4">
             <div className="flex w-11 justify-start">

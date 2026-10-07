@@ -4,6 +4,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import Image from "next/image";
 import { motion } from "motion/react";
 import { CalendarCheck, CaretDown, FilePdf, GlobeHemisphereWest, ClockCounterClockwise, ListChecks, Quotes, ShieldCheck, Sparkle } from "@phosphor-icons/react";
+import { CountUp } from "./CountUp";
 import { CheckoutButton } from "./CheckoutButton";
 import { FunnelFrame } from "./FunnelFrame";
 import { useRequireQuiz } from "./Gate";
@@ -61,7 +62,7 @@ export function OfferView() {
           <div className="grid grid-cols-1 gap-3">
             <Card sunken>
               <p className="text-[13px] font-extrabold uppercase tracking-wide text-muted-foreground">Si sigues igual</p>
-              <p className="mt-1 text-[16px] leading-snug">Seguirás dedicando <b>≈ {r.horasAnio} horas al año</b> ({r.horasSemana} h por semana × {SEMANAS_DE_CLASE} semanas) a armar fichas desde cero.</p>
+              <p className="mt-1 text-[16px] leading-snug">Domingos y tardes con Word abierto: <b>≈ <CountUp to={r.horasAnio} /> horas al año</b> ({r.horasSemana} h por semana × {SEMANAS_DE_CLASE} semanas) armando fichas desde cero.</p>
             </Card>
             <Card>
               <p className="text-[13px] font-extrabold uppercase tracking-wide" style={{ color: "var(--primary)" }}>Con Profe Exprés</p>

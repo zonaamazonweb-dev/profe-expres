@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { Check } from "@phosphor-icons/react";
@@ -63,6 +64,7 @@ export function QuizFlow() {
                   style={{
                     background: on ? "color-mix(in oklab, var(--primary) 9%, var(--card))" : "var(--card)",
                     border: `2px solid ${on ? "var(--primary)" : "var(--border)"}`,
+                    boxShadow: on ? "0 10px 24px -14px color-mix(in oklab, var(--primary) 60%, transparent)" : "0 6px 16px -14px color-mix(in oklab, var(--primary) 40%, transparent)",
                   }}>
                   <span>{opt}</span>
                   <span className="flex size-6 shrink-0 items-center justify-center rounded-full" style={{ background: on ? "var(--primary)" : "transparent", border: on ? "none" : "2px solid var(--border)", color: "#fff" }}>
@@ -71,6 +73,10 @@ export function QuizFlow() {
                 </motion.button>
               );
             })}
+          </div>
+          <div className="mt-auto flex items-center gap-3 pt-4">
+            <Image src="/funnel/mascota.webp" alt="" width={56} height={56} className="size-14 shrink-0" />
+            <p className="text-[14px] leading-snug text-muted-foreground">{step < QUESTIONS.length - 1 ? "Sin respuestas malas: así ajusto tu resultado." : "¡Última! Con esto armo tu resultado."}</p>
           </div>
         </motion.section>
       </AnimatePresence>

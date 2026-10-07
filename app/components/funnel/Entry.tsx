@@ -11,21 +11,24 @@ export function Entry() {
       <div className="stagger flex flex-1 flex-col gap-6">
         <div className="flex flex-col gap-3">
           <Eyebrow>Para profes de primaria</Eyebrow>
-          <H1>¿Eres profe? Prepara las fichas de <Accent>toda la semana</Accent> en minutos</H1>
+          <H1>Domingo en la noche, Word abierto… <Accent>¿y si la semana ya estuviera lista?</Accent></H1>
           <p className="text-[17px] leading-snug text-muted-foreground">
-            Responde 5 preguntas y te mostramos cómo. Toma <b className="text-foreground">menos de 2 minutos</b>.
+            Profe Exprés arma las fichas de toda tu semana en minutos. Responde 5 preguntas (<b className="text-foreground">menos de 2 minutos</b>) y mira cuántas horas puedes recuperar.
           </p>
         </div>
 
-        <div className="relative flex items-center justify-center rounded-[20px] py-8" style={{ background: "var(--sunken)" }}>
-          <Image src="/funnel/mascota.webp" alt="Cerebrito, el asistente de Profe Exprés" width={150} height={150} priority className="size-[150px]" />
+        <div className="rounded-[20px] p-[1.5px]" style={{ background: "linear-gradient(135deg, var(--primary), var(--accent-2))" }}>
+          <div className="flex items-center gap-4 rounded-[18.5px] p-4" style={{ background: "var(--card)" }}>
+            <Image src="/funnel/mascota.webp" alt="Cerebrito, el asistente de Profe Exprés" width={72} height={72} priority className="size-[72px] shrink-0" />
+            <p className="text-[16px] font-bold leading-snug">Una ficha completa en <span style={{ color: "var(--primary)" }}>15–25 segundos</span>, sobre tu tema y tu grado.</p>
+          </div>
         </div>
 
         <ul className="flex flex-col gap-3">
           {[
-            { Icon: Printer, t: "Fichas en PDF listas para imprimir" },
-            { Icon: CalendarCheck, t: "Toda la semana de una sola vez" },
-            { Icon: GlobeHemisphereWest, t: "Para docentes de países hispanohablantes" },
+            { Icon: Printer, t: "Sobre tu tema y tu grado exactos" },
+            { Icon: CalendarCheck, t: "Toda tu semana de una sola vez" },
+            { Icon: GlobeHemisphereWest, t: "Con el currículo de tu país" },
           ].map(({ Icon, t }) => (
             <li key={t} className="flex items-center gap-3 text-[16px] font-bold">
               <IconChip><Icon size={22} weight="duotone" /></IconChip>{t}

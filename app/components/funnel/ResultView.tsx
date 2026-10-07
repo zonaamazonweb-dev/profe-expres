@@ -3,6 +3,7 @@
 import { useMemo } from "react";
 import Image from "next/image";
 import { Clock, Heart } from "@phosphor-icons/react";
+import { CountUp } from "./CountUp";
 import { FunnelFrame } from "./FunnelFrame";
 import { useRequireQuiz } from "./Gate";
 import { Accent, Card, Cta, Eyebrow, H2 } from "./ui";
@@ -31,7 +32,7 @@ export function ResultView() {
             <span className="flex size-11 shrink-0 items-center justify-center rounded-[14px]" style={{ background: "color-mix(in oklab, var(--primary) 11%, transparent)", color: "var(--primary)" }}><Clock size={22} weight="duotone" /></span>
             <div>
               <p className="text-[14px] font-bold text-muted-foreground">Preparando fichas, hoy pierdes</p>
-              <p className="font-display text-[40px] font-extrabold leading-none tabular-nums"><Accent>≈ {r.horasAnio}</Accent> h</p>
+              <p className="font-display text-[40px] font-extrabold leading-none tabular-nums"><Accent>≈ <CountUp to={r.horasAnio} /></Accent> h</p>
               <p className="mt-1 text-[14px] text-muted-foreground">al año ({r.horasSemana} h por semana × {SEMANAS_DE_CLASE} semanas de clase, según tus respuestas).</p>
             </div>
           </div>

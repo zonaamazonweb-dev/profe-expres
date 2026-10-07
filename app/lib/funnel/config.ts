@@ -11,7 +11,7 @@ export const FUNNEL = {
   /** Días de garantía elegidos en Hotmart (decisión del dueño, 2026-10-07). */
   guaranteeDays: Number(process.env.NEXT_PUBLIC_GUARANTEE_DAYS) || 7,
   /** Correo de soporte que se muestra al final de la oferta. */
-  supportEmail: process.env.NEXT_PUBLIC_SUPPORT_EMAIL?.trim() || "",
+  supportEmail: process.env.NEXT_PUBLIC_SUPPORT_EMAIL?.trim() || "zona.amazon.web@gmail.com",
   /** URL del video de ventas (mp4 directo o embed). Vacío = escenario reservado. */
   vslUrl: process.env.NEXT_PUBLIC_VSL_URL?.trim() || "",
   /** Segundos antes de que aparezca el botón bajo el video (solo si hay video). */

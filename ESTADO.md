@@ -77,6 +77,13 @@ PENDIENTE:
 - Variables de Supabase y de funnel aún no están en Vercel: producción no tiene el camino de venta funcionando con medición hasta subirlas y redeploy.
 - Pantallas secundarias del funnel (resultado, solución, prueba social, video) sin revisor (secundarias).
 
+## Webhook de Hotmart (construido 2026-10-07; PENDIENTE conectarlo en producción)
+- Endpoint: `POST /api/webhooks/hotmart` (`app/app/api/webhooks/hotmart/route.ts`, lógica en `app/lib/hotmart/`). Orden: hottok en tiempo constante (header `x-hotmart-hottok` o campo `hottok`; fail-closed si falta `HOTMART_HOTTOK`) → solo el producto de `HOTMART_PRODUCT_ID` → frescura 7 días → dedupe por id de evento → libro de ventas (clave proveedor+transacción+tipo: APPROVED y COMPLETE de una compra cuentan UNA venta) → cuenta (se crea con el correo comprador, sin contraseña) y estado → marca "procesado" solo si todo salió bien.
+- Estados: APPROVED/COMPLETE→active · DELAYED→past_due · SUBSCRIPTION_CANCELLATION→cancelled (acceso hasta `access_until`=próximo cobro) · EXPIRED→cancelled involuntaria · REFUNDED→refunded · CHARGEBACK→chargeback · SWITCH_PLAN→solo cambia el plan. Una cuenta reembolsada no se reactiva con el aviso reentregado de la misma transacción; una desactivada a mano no se reactiva por pago.
+- Migración `20261007020000_access_until.sql` aplicada (access_until, hotmart_subscriber_code).
+- Probado en local con avisos simulados: sin hottok 401 · hottok malo 401 · producto ajeno ignorado · compra crea cuenta + 1 venta (US$7) · reentrega = duplicado · COMPLETE no duplica venta · JSON roto 400 · reembolso corta acceso · reaprobación tras reembolso = ilegal. 26 tests ✓.
+- FALTA: (1) variables en Vercel: HOTMART_HOTTOK, HOTMART_PRODUCT_ID + las de Supabase (NEXT_PUBLIC_SUPABASE_URL, NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY, SUPABASE_SECRET_KEY, AI_PRICE_*); (2) push/deploy; (3) crear webhook en Hotmart con la URL de producción; (4) compra real de prueba (reembolsable) y revisar el JSON real: plan anual/mensual (`intervalFromPlan` es suposición por nombre del plan), campo de origen (`origin.src`), y si Hotmart manda trial; (5) Resend + SMTP propio de Supabase: hoy el acceso es entrar a /login y pedir código por correo (SMTP gratuito de Supabase tiene tope muy bajo); (6) reconciliación semanal contra Hotmart (no construida).
+
 ## Sesiones completadas ✅
 (ninguna cerrada aún)
 

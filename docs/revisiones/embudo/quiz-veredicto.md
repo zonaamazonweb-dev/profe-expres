@@ -1,9 +1,9 @@
-# VEREDICTO revisor-visual — quiz (pregunta del quiz / onboarding)
+# VEREDICTO revisor-visual — quiz (pregunta 1 de 5)
 Fecha: 2026-10-07 12:00
 Screenshot: docs/revisiones/embudo/quiz-p1-375.png
-Usabilidad: 29/40
-Craft: 14/20
-Copy (si vende): 13/20
-Fidelidad (si hubo referencia): N-A
+Usabilidad: 30/40
+Craft: 15/20
+Copy (si vende): 12/20
+Fidelidad (si hubo referencia): FIEL
 Veredicto: NO LISTA
-Top defectos: 1) Copy sin especificidad ni prueba: las 5 preguntas no tienen ningun numero ni dato del avatar, la P1 no usa escena del domingo en la noche, y nada dice por que se pregunta ni que recibira al final (eje oferta y especificidad en 2) -> agregar microcopy de "para que" (ej. "Con esto calculamos cuantas horas de tu ano puedes recuperar") y una escena real en P1/P3. 2) Profundidad plana: fondo crema liso, cards blancas con borde lavanda 2px y sin sombra tintada ni superficie hundida; la zona inferior (~300px a 375x812) queda como vacio muerto -> aplicar sombra tintada de Card, fondo con mesh/gradiente sutil y mover mascota/elemento de valor (ej. "tu ahorro estimado" o tip) al hueco inferior. 3) Identidad pobre en esta pantalla: la mascota es de 28px en el header y la pantalla no tiene ningun dispositivo ownable (anillo, ilustracion) mas alla del titulo en Baloo -> mascota grande reaccionando a la respuesta o mini-anillo de avance. 4) Auto-avance a 260ms sin confirmacion: un toque errado salta de pregunta; solo se deshace con la flecha; sin :focus-visible ni teclado en radios; sin stagger de entrada de opciones -> agregar stagger 60ms, focus-visible y tolerancia de deshacer. 5) Texto de interes y respuestas en femenino unico ("interesada", "segura") excluye al sub-avatar profesor; barra de progreso topada a 62% y desfasada del "Pregunta N de 5" -> usar neutro ("Que tanto te interesaria") y alinear progreso con 5 pasos.
+Top defectos: 1) Copy sin especificidad ni prueba ni dolor: el hint de la P1 ("Elige la que más se parezca a ti") no dice que el quiz calcula las horas del año ni cuánto tarda; la frase de promesa solo vive como fallback en el código. 2) Hueco muerto de ~120px entre opciones y mascota, y mascota duplicada (header 28px + pie 56px, la ficha pide 40-48px). 3) Jerarquía con 5 tamaños (13/24/15/17/14); opciones a 17px/800 compiten con el título; "Pregunta 1 de 5" en gris vs Eyebrow acento del resultado. 4) Viuda "Docs" en la opción 1 (encaje óptico). 5) Auto-avance a 260ms sin aviso, sin stagger de opciones, radiogroup sin navegación por flechas (roving tabindex).
