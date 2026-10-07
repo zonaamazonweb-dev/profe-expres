@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { Baloo_2, Nunito, Geist_Mono } from "next/font/google";
-import { BottomNav } from "@/components/app/BottomNav";
 import "./globals.css";
 
 const baloo = Baloo_2({
@@ -33,10 +32,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       className={`${baloo.variable} ${nunito.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-dvh flex flex-col bg-background text-foreground font-sans">
-        <div className="mx-auto flex w-full max-w-md flex-1 flex-col">
-          <main className="flex-1 px-5 pb-4 pt-6">{children}</main>
-          <BottomNav />
-        </div>
+        {children}
       </body>
     </html>
   );

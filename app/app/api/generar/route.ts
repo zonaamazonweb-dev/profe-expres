@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
 import { generarFicha } from "@/lib/ai-adapter";
+import { logError, logEvent } from "@/lib/telemetry";
 
 const bodySchema = z.object({
   materia: z.string().min(1),
@@ -26,8 +27,12 @@ export async function POST(request: Request) {
       ...parsed.data,
       tiposPregunta: parsed.data.tiposPregunta as never,
     });
+    await logEvent("ficha_generada", {
+      metadata: { materia: parsed.data.materia, grado: parsed.data.grado, cantidad: parsed.data.cantidadPreguntas },
+    });
     return NextResponse.json(resultado);
   } catch (err) {
+    await logError(err, "api/generar", { path: "/api/generar" });
     const mensaje = err instanceof Error ? err.message : "Error generando la ficha.";
     return NextResponse.json({ error: mensaje }, { status: 500 });
   }

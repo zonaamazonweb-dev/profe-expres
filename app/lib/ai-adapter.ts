@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { env } from "./env";
+import { logAiCall } from "./telemetry";
 import type { Pregunta, TipoPregunta } from "./types";
 
 const preguntaSchema = z.discriminatedUnion("tipo", [
@@ -75,6 +76,7 @@ export async function generarFicha(
     );
   }
 
+  const inicio = Date.now();
   const res = await fetch("https://api.anthropic.com/v1/messages", {
     method: "POST",
     headers: {
@@ -87,17 +89,43 @@ export async function generarFicha(
       max_tokens: 2048,
       messages: [{ role: "user", content: construirPrompt(params) }],
     }),
+  }).catch(async (err: unknown) => {
+    await logAiCall({
+      feature: "ficha",
+      model: env.AI_MODEL,
+      status: "error",
+      latencyMs: Date.now() - inicio,
+      error: err instanceof Error ? err.message : "fallo de red",
+    });
+    throw err;
   });
 
   if (!res.ok) {
     const detalle = await res.text().catch(() => "");
+    await logAiCall({
+      feature: "ficha",
+      model: env.AI_MODEL,
+      status: "error",
+      latencyMs: Date.now() - inicio,
+      error: `HTTP ${res.status}`,
+    });
     throw new Error(`La IA no respondió correctamente (${res.status}). ${detalle.slice(0, 300)}`);
   }
 
   const data = (await res.json()) as {
     content: Array<{ type: string; text?: string }>;
+    usage?: { input_tokens?: number; output_tokens?: number };
   };
   const texto = data.content.find((b) => b.type === "text")?.text ?? "";
+
+  await logAiCall({
+    feature: "ficha",
+    model: env.AI_MODEL,
+    status: "ok",
+    tokensIn: data.usage?.input_tokens ?? null,
+    tokensOut: data.usage?.output_tokens ?? null,
+    latencyMs: Date.now() - inicio,
+  });
 
   let json: unknown;
   try {
