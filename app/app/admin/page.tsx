@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { adminPageData } from "@/lib/admin/page-data";
-import { AlertsBanner, PageTitle, Panel, RangeFilter, Section, SinDatos, Stat } from "@/components/admin/ui";
+import { AlertsBanner, PageTitle, Panel, RangeFilter, Section, SinDatos, Stat, StatGrid } from "@/components/admin/ui";
 import { TrendChart } from "@/components/admin/charts";
 import { deltaText, formatInt, formatMoney, formatPct, formatUsd } from "@/lib/admin/format";
 import { activation, mainActionCounts, productUsers, ACTION_EVENT } from "@/lib/admin/metrics";
@@ -36,7 +36,7 @@ export default async function ResumenPage({ searchParams }: { searchParams: Prom
 
       <AlertsBanner alerts={o.alerts} hasData={hasData} />
 
-      <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
+      <div className="grid gap-2.5 sm:grid-cols-2 sm:gap-3">
         <Stat hero label={`Facturaste${main ? ` (${main.currency})` : ""}`}
           value={main ? formatMoney(main.gross, main.currency) : null}
           insight={main ? `${delta?.text}${otherCurrencies.length ? ` · También hay ventas en ${otherCurrencies.join(", ")} (mira Ventas)` : ""}` : "Aparece con la primera venta de Hotmart."}
@@ -45,21 +45,22 @@ export default async function ResumenPage({ searchParams }: { searchParams: Prom
           value={profitMain ? formatMoney(profitMain.profit, profitMain.currency) : null}
           insight={profitMain ? (profitMain.margin != null ? `Margen del ${formatPct(profitMain.margin)} sobre lo cobrado` : undefined) : "Se calcula cuando haya ventas."}
           tono={profitMain && profitMain.profit <= 0 ? "malo" : "neutro"} />
-        <Stat label="Clientas con acceso" value={users.length === 0 ? null : formatInt(payingActive + manualActive)}
-          insight={users.length === 0 ? "Aún no hay usuarias." : `${payingActive} pagando · ${manualActive} agregadas a mano`} />
-        <Stat label={`Ingreso mensual recurrente${mrrCurrency ? ` (${mrrCurrency})` : ""}`}
-          value={mrrCurrency && o.mrr[mrrCurrency] != null ? formatMoney(o.mrr[mrrCurrency], mrrCurrency) : null}
-          insight={mrrCurrency ? "Lo que entra cada mes de las cuentas pagas vigentes (plan anual repartido en 12)." : "Sin cuentas pagas todavía."} />
       </div>
 
-      <div className="grid gap-3 sm:grid-cols-3">
-        <Stat label="Fichas creadas en el periodo" value={o.events.some((e) => e.type === ACTION_EVENT) ? formatInt(o.events.filter((e) => e.type === ACTION_EVENT && new Date(e.created_at) >= o.range.start).length) : null}
-          insight={`Hoy: ${actions.today} · 7 días: ${actions.week}`} />
+      <StatGrid>
+        <Stat label="Clientas con acceso" value={users.length === 0 ? null : formatInt(payingActive + manualActive)}
+          insight={users.length === 0 ? "Aún no hay usuarias." : `${payingActive} pagando · ${manualActive} a mano`} />
+        <Stat label={`Ingreso mensual${mrrCurrency ? ` (${mrrCurrency})` : ""}`}
+          value={mrrCurrency && o.mrr[mrrCurrency] != null ? formatMoney(o.mrr[mrrCurrency], mrrCurrency) : null}
+          insight={mrrCurrency ? "De cuentas pagas vigentes." : "Sin cuentas pagas todavía."} />
+        <Stat label="Fichas creadas" value={o.events.some((e) => e.type === ACTION_EVENT) ? formatInt(o.events.filter((e) => e.type === ACTION_EVENT && new Date(e.created_at) >= o.range.start).length) : null}
+          insight={`Hoy ${actions.today} · 7 días ${actions.week}`} />
         <Stat label="Gasto en IA" value={o.ai.calls > 0 ? formatUsd(o.ai.totalUsd) : null}
-          insight={o.ai.calls > 0 ? `${formatInt(o.ai.calls)} llamadas · hoy ${formatUsd(o.ai.todayUsd)}` : "Sin llamadas a la IA en este periodo."} />
-        <Stat label="Usuarias que ya hicieron su primera ficha" value={act.rate == null ? null : formatPct(act.rate)}
-          insight={act.rate == null ? "Hace falta que haya usuarias con cuenta." : `${act.activated} de ${act.total}`} />
-      </div>
+          insight={o.ai.calls > 0 ? `${formatInt(o.ai.calls)} llamadas` : "Sin llamadas en este periodo."} />
+      </StatGrid>
+      <p className="-mt-3 text-[12px] text-muted-foreground">
+        {act.rate == null ? "Primera ficha: aún sin usuarias con cuenta." : `Hicieron su primera ficha: ${formatPct(act.rate)} (${act.activated} de ${act.total}).`}
+      </p>
 
       <Section titulo="Ventas por día">
         {main && main.sales > 0 ? (
@@ -67,21 +68,22 @@ export default async function ResumenPage({ searchParams }: { searchParams: Prom
         ) : <SinDatos>Cuando entren las primeras ventas por Hotmart, aquí ves cómo evolucionan.</SinDatos>}
       </Section>
 
-      <Section titulo="Qué está conectado" sub="Lo que falte aquí explica los «Sin datos» de arriba.">
-        <Panel className="!p-0">
-          <ul className="divide-y divide-border">
-            {conexiones.map((c) => (
-              <li key={c.nombre} className="flex items-center justify-between gap-3 px-4 py-3 text-[13px]">
-                <span className="font-extrabold">{c.nombre}</span>
-                <span className="text-right font-bold" style={{ color: c.ok ? "#2F9E5B" : "#B7791F" }}>{c.ok ? "●" : "○"} {c.nota}</span>
-              </li>
-            ))}
-          </ul>
-        </Panel>
+      <details className="rounded-[20px] bg-card p-4">
+        <summary className="min-h-11 cursor-pointer list-none text-[13px] font-extrabold">
+          Qué está conectado <span className="font-normal text-muted-foreground">· {conexiones.filter((c) => c.ok).length} de {conexiones.length} listas</span>
+        </summary>
+        <ul className="mt-2 divide-y divide-border">
+          {conexiones.map((c) => (
+            <li key={c.nombre} className="flex flex-wrap items-center justify-between gap-x-3 gap-y-0.5 py-2.5 text-[13px]">
+              <span className="font-extrabold">{c.nombre}</span>
+              <span className="font-bold" style={{ color: c.ok ? "#2F9E5B" : "#B7791F" }}>{c.ok ? "●" : "○"} {c.nota}</span>
+            </li>
+          ))}
+        </ul>
         <p className="mt-2 text-[12px] text-muted-foreground">
-          Para ver cada número en detalle: <Link className="underline" href="/admin/ventas">Ventas</Link>, <Link className="underline" href="/admin/ganancia">Ganancia real</Link>, <Link className="underline" href="/admin/uso">Uso</Link>.
+          Detalle: <Link className="underline" href="/admin/ventas">Ventas</Link>, <Link className="underline" href="/admin/ganancia">Ganancia real</Link>, <Link className="underline" href="/admin/uso">Uso</Link>.
         </p>
-      </Section>
+      </details>
     </div>
   );
 }

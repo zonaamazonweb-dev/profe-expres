@@ -1,9 +1,9 @@
-# VEREDICTO revisor-visual — admin-ventas
+# VEREDICTO revisor-visual — admin ventas
 Fecha: 2026-10-07 12:00
-Screenshot: docs/revisiones/admin/ventas-375-1.png
-Usabilidad: 27/40
-Craft: 12/20
+Screenshot: docs/revisiones/admin/ventas-375-2.png
+Usabilidad: 26/40
+Craft: 10/20
 Copy (si vende): N-A
-Fidelidad (si hubo referencia): N-A
+Fidelidad (si hubo referencia): FIEL
 Veredicto: NO LISTA
-Top defectos: (1) Carga cognitiva: ~14 tarjetas iguales en columna (4 KPI x moneda x2 + MRR + 4 bajas) sin resumen ni veredicto; cada KPI pesa igual. (2) Bloque BRL duplica el bloque USD completo con otro grafico: scroll largo, sin sintesis. (3) Graficos de linea con picos de 1 dia sobre cero, sin etiqueta del dato ni insight; no se entiende que decidir. (4) Tabla "Ultimas ventas" cortada a 375px (Canal truncado, Monto fuera de vista, solo scroll horizontal). (5) Insights con jerga/tono confuso: "300% frente al periodo anterior", "1 devoluciones", "Tasa de bajas 50%" sin contexto de muestra pequena; "Canal" muestra ads_meta crudo. Tabs superiores: segunda barra gris de scroll solapada bajo "Resumen" y tab "Ganancia real" recortada. Sin movimiento (charts isAnimationActive=false, sin conteo/stagger/reduced-motion). Sin identidad ownable mas alla de Baloo/Nunito y acento de la ficha (valores coinciden con la ficha).
+Top defectos: 1) Grilla de stats con tarjeta huérfana ("Compras", "Por mes", "Tasa de bajas") que deja un hueco a la derecha; desencaje a simple vista. 2) Página larguísima (2978px) con dos bloques de moneda de 4 stats + gráfico cada uno y el mismo texto aclaratorio de "Cobrado" repetido; sobrecarga y poco minimalismo. 3) Gráficos de barras casi vacíos (1-3 barras finas sobre eje de 120), sin etiqueta directa ni insight; el eje y etiquetas quedan tapados por el badge "N" (overlay de dev; verificar sin él). 4) Color #E5484D hardcodeado en page.tsx línea 71 (debe ser token), y "Últimas ventas" como 5 mini-tarjetas altas con label sobre valor en vez de filas compactas. 5) Craft sin motion verificable en la página (charts sin animación, sin stagger ni conteo de números héroe) y sin dispositivo ownable (el anillo de la ficha no aparece); profundidad plana (blanco sobre crema).

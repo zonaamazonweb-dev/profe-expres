@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useRef } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
@@ -20,10 +21,16 @@ export const ADMIN_LINKS = [
 
 export function AdminNav({ orientation }: { orientation: "vertical" | "horizontal" }) {
   const pathname = usePathname();
+  const ref = useRef<HTMLElement>(null);
+  useEffect(() => {
+    // En el celular, la pestaña activa se acerca al centro para que siempre se vea.
+    ref.current?.querySelector<HTMLElement>('[aria-current="page"]')?.scrollIntoView({ inline: "center", block: "nearest" });
+  }, [pathname]);
   return (
     <nav
+      ref={ref}
       aria-label="Panel de administración"
-      className={orientation === "vertical" ? "flex flex-col gap-1" : "flex gap-1.5 overflow-x-auto pb-1"}
+      className={orientation === "vertical" ? "flex flex-col gap-1" : "no-scrollbar flex gap-1.5 overflow-x-auto pb-1"}
     >
       {ADMIN_LINKS.map(({ href, label, Icon }) => {
         const activo = href === "/admin" ? pathname === "/admin" : pathname.startsWith(href);
@@ -32,7 +39,7 @@ export function AdminNav({ orientation }: { orientation: "vertical" | "horizonta
             key={href}
             href={href}
             aria-current={activo ? "page" : undefined}
-            className="flex shrink-0 items-center gap-2.5 rounded-[12px] px-3 py-2 text-[13px] font-bold transition-colors"
+            className="flex shrink-0 items-center gap-2.5 min-h-11 rounded-[12px] px-3 py-2 text-[13px] font-bold transition-colors"
             style={{
               color: activo ? "var(--primary)" : "var(--muted-foreground)",
               background: activo ? "color-mix(in oklab, var(--primary) 12%, transparent)" : "transparent",

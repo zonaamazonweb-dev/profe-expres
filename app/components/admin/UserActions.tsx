@@ -83,32 +83,45 @@ export function RowActions({ userId, status, canAct }: { userId: string; status:
   const [linkState, linkAction, linkPending] = useActionState(accessLinkFor, vacio);
   const [toggleState, toggleAction, togglePending] = useActionState(setUserActive, vacio);
   const disabled = status === "disabled";
+  const [asking, setAsking] = useState(false);
 
   if (!canAct) return <span className="text-[11.5px] text-muted-foreground">Requiere doble verificación</span>;
 
   return (
-    <div className="flex flex-col items-end gap-1">
-      <div className="flex flex-wrap justify-end gap-1.5">
+    <div className="flex flex-col gap-1 md:items-end">
+      <div className="flex flex-wrap gap-1.5 md:justify-end">
         {!disabled && (
           <form action={linkAction}>
             <input type="hidden" name="userId" value={userId} />
-            <button disabled={linkPending} className="flex h-8 items-center gap-1.5 rounded-[10px] border-[1.5px] border-border px-2.5 text-[11.5px] font-bold disabled:opacity-60">
+            <button disabled={linkPending} className="flex min-h-11 items-center gap-1.5 rounded-[12px] border-[1.5px] border-border px-3 text-[12.5px] font-bold disabled:opacity-60">
               <LinkSimple size={14} /> Enlace de acceso
             </button>
           </form>
         )}
-        <form action={toggleAction}>
+        <form action={toggleAction} className="flex flex-wrap items-center gap-1.5">
           <input type="hidden" name="userId" value={userId} />
           <input type="hidden" name="activar" value={disabled ? "1" : "0"} />
-          <button disabled={togglePending} className="flex h-8 items-center gap-1.5 rounded-[10px] border-[1.5px] border-border px-2.5 text-[11.5px] font-bold disabled:opacity-60"
-            style={{ color: disabled ? "#2F9E5B" : "#E5484D" }}>
-            {disabled ? <><ArrowCounterClockwise size={14} /> Reactivar</> : <><Prohibit size={14} /> Desactivar</>}
-          </button>
+          {disabled || asking ? (
+            <>
+              {asking && <span className="text-[12px] font-bold">¿Seguro? Ya no podrá entrar.</span>}
+              <button disabled={togglePending} onClick={() => setAsking(false)}
+                className="flex min-h-11 items-center gap-1.5 rounded-[12px] border-[1.5px] border-border px-3 text-[12.5px] font-bold disabled:opacity-60"
+                style={{ color: disabled ? "#2F9E5B" : "#E5484D" }}>
+                {disabled ? <><ArrowCounterClockwise size={14} /> Reactivar</> : <><Prohibit size={14} /> Sí, desactivar</>}
+              </button>
+              {asking && <button type="button" onClick={() => setAsking(false)} className="min-h-11 px-2 text-[12.5px] font-bold text-muted-foreground">Cancelar</button>}
+            </>
+          ) : (
+            <button type="button" onClick={() => setAsking(true)}
+              className="flex min-h-11 items-center gap-1.5 rounded-[12px] border-[1.5px] border-border px-3 text-[12.5px] font-bold" style={{ color: "#E5484D" }}>
+              <Prohibit size={14} /> Desactivar
+            </button>
+          )}
         </form>
       </div>
       {(linkState.message || toggleState.message) && (
         <div className="w-full max-w-xs text-right" role="status">
-          <p className="text-[11.5px] font-bold" style={{ color: (linkState.message ? linkState.ok : toggleState.ok) ? "#2F9E5B" : "#E5484D" }}>
+          <p className="text-[12px] font-bold" style={{ color: (linkState.message ? linkState.ok : toggleState.ok) ? "#2F9E5B" : "#E5484D" }}>
             {linkState.message || toggleState.message}
           </p>
           {linkState.link && <CopyLink link={linkState.link} />}

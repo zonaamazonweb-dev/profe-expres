@@ -1,3 +1,4 @@
+import { channelLabel } from "./labels";
 /** Métricas del panel: funciones PURAS (reciben datos y la hora; no leen nada ni inventan nada). */
 import type {
   AiCallRow, CostRow, ErrorRow, EventRow, MembershipEventRow, ProfileRow, Range, SpendRow, TxRow, WebhookRow,
@@ -298,10 +299,14 @@ export function ghostPayers(profiles: ProfileRow[], now: number = Date.now()): P
 }
 
 export const FUNNEL_STEPS = [
-  { type: "quiz_iniciado", label: "Empezaron el quiz" },
-  { type: "quiz_completado", label: "Terminaron el quiz" },
-  { type: "oferta_vista", label: "Llegaron a la oferta" },
-  { type: "checkout_iniciado", label: "Fueron al pago de Hotmart" },
+  { type: "funnel_view", label: "Entraron al camino de venta" },
+  { type: "quiz_start", label: "Empezaron el quiz" },
+  { type: "quiz_complete", label: "Terminaron el quiz" },
+  { type: "result_view", label: "Vieron su resultado" },
+  { type: "solution_view", label: "Vieron la solución" },
+  { type: "vsl_view", label: "Llegaron al video" },
+  { type: "offer_view", label: "Llegaron a la oferta" },
+  { type: "checkout_click", label: "Fueron al pago de Hotmart" },
   { type: "primer_cobro_confirmado", label: "Pagaron" },
 ] as const;
 
@@ -406,7 +411,7 @@ export function webhookHealth(logs: WebhookRow[], now: number = Date.now()) {
 /* ───────────────────────────── AVISOS ───────────────────────────── */
 
 export type AlertTone = "malo" | "aviso" | "info";
-export interface PanelAlert { id: string; tone: AlertTone; title: string; why: string; todo: string }
+export interface PanelAlert { id: string; tone: AlertTone; title: string; why: string; todo: string; href?: string; cta?: string }
 
 export interface AlertInput {
   profit: ProfitLine[];
@@ -430,6 +435,7 @@ export function buildAlerts(i: AlertInput): PanelAlert[] {
       title: `La IA se está comiendo el ${Math.round(share * 100)}% de lo que cobras`,
       why: "Lo sano es menos del 20%. Cada ficha te deja menos margen de lo planeado.",
       todo: "Revisa los límites de uso por usuaria o sube el precio del plan.",
+      href: "/admin/ia", cta: "Ver el gasto de IA",
     });
   } else if (i.ai.totalUsd > 0 && i.incomeUsd === 0) {
     alerts.push({
@@ -437,6 +443,7 @@ export function buildAlerts(i: AlertInput): PanelAlert[] {
       title: `Llevas ${i.ai.totalUsd.toFixed(2)} USD gastados en IA y todavía no hay ventas`,
       why: "Mientras la app esté abierta al público, cualquiera con el enlace gasta tu saldo de IA.",
       todo: "Cuando el embudo y el login estén listos, solo podrán usarla quienes pagaron.",
+      href: "/admin/ia", cta: "Ver el gasto de IA",
     });
   }
 
@@ -446,12 +453,14 @@ export function buildAlerts(i: AlertInput): PanelAlert[] {
       title: `Hotmart te avisó ${i.webhook.failed24h} veces en el último día y falló`,
       why: "Los pagos podrían no estar dando acceso, o dárselo a quien no pagó.",
       todo: "Abre «Salud» para ver qué falló y revisa la conexión con Hotmart.",
+      href: "/admin/salud", cta: "Abrir Salud",
     });
     else if (i.webhook.hoursSinceLast != null && i.webhook.hoursSinceLast > 24 * 3) alerts.push({
       id: "webhook-silencio", tone: "aviso",
       title: "Hace más de 3 días que Hotmart no te avisa de nada",
       why: "Si hubo ventas, es posible que el aviso de pago no esté llegando.",
       todo: "Compara con tus ventas en Hotmart. Si hay ventas sin acceso, agrégalas a mano en «Usuarias».",
+      href: "/admin/usuarias", cta: "Abrir Usuarias",
     });
   }
 
@@ -460,13 +469,15 @@ export function buildAlerts(i: AlertInput): PanelAlert[] {
     title: `${Math.round(i.churn.involuntaryShare * 100)}% de las bajas son por pago fallido`,
     why: "Estás perdiendo clientas que sí querían seguir pagando.",
     todo: "Activa los recordatorios de cobro fallido: es la forma más barata de recuperarlas.",
+      href: "/admin/ventas", cta: "Ver bajas",
   });
 
   for (const c of i.channels) if (c.ratio != null && c.ratio < 1) alerts.push({
     id: `canal-${c.channel}-${c.currency}`, tone: "malo",
-    title: `El canal «${c.channel}» te trae clientas que cuestan más de lo que dejan`,
+    title: `El canal «${channelLabel(c.channel)}» te trae clientas que cuestan más de lo que dejan`,
     why: `Por cada 1 que gastas, recuperas ${c.ratio.toFixed(2)}. Cada venta ahí te empobrece.`,
     todo: "Pausa el gasto en ese canal o mejora la retención de esas clientas.",
+      href: "/admin/negocio", cta: "Ver canales",
   });
 
   const top = i.errors[0];
@@ -475,6 +486,7 @@ export function buildAlerts(i: AlertInput): PanelAlert[] {
     title: `Un mismo error se repitió ${top.count} veces`,
     why: "Algo está fallando para varias personas.",
     todo: "Abre «Salud» y revisa el más frecuente primero.",
+      href: "/admin/salud", cta: "Abrir Salud",
   });
 
   for (const p of i.profit) if (p.income > 0 && p.profit <= 0) alerts.push({
@@ -482,6 +494,7 @@ export function buildAlerts(i: AlertInput): PanelAlert[] {
     title: `En ${p.currency} estás perdiendo dinero este periodo`,
     why: "Vender más empeora el resultado mientras los costos superen lo que cobras.",
     todo: "Revisa «Ganancia real»: qué costo pesa más y si conviene subir el precio.",
+      href: "/admin/ganancia", cta: "Ver ganancia real",
   });
 
   return alerts;

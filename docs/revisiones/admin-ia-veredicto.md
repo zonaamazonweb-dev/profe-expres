@@ -1,10 +1,9 @@
-# VEREDICTO revisor-visual — admin-ia (Inteligencia artificial)
+# VEREDICTO revisor-visual — admin ia
 Fecha: 2026-10-07 12:00
-Screenshot: docs/revisiones/admin/ia-375-1.png (y ia-375-2.png)
-Usabilidad: 24/40
-Craft: 10/20
+Screenshot: docs/revisiones/admin/ia-375-2.png
+Usabilidad: 27/40
+Craft: 11/20
 Copy (si vende): N-A
 Fidelidad (si hubo referencia): N-A
 Veredicto: NO LISTA
-Top defectos: (1) Sin decision accionable: "24,4 % por encima del 20% sano" y el banner de fallos no dicen que hacer ni enlazan a Salud; (2) Nombre tecnico crudo "qa_ficha (6)" en "Por tipo de funcion" y barra unica con valor "34,12 USD" partido en 2 lineas, mucho aire muerto; (3) Grafico "Gasto por dia" con un solo pico (linea plana + spike) sin insight ni etiqueta del dia/valor; 4 stats apiladas ocupan una pantalla entera antes del contenido util; (4) Movimiento ausente (sin stagger, sin conteo, sin tap feedback; confirmado en components/admin: solo transition-colors en nav); (5) Tab activo con subrayado gris (no acento), pestana "Ganancia real" cortada en el borde.
-Gate carga cognitiva: 2 fallas (4 stats consecutivas con 1 hero ambiguo; elementos de nav cortados) - no critico.
+Top defectos: 1) Grafico "Gasto por dia": una sola barra coral sobre 30 dias casi vacios, sin animacion, eje Y con etiqueta superior cortada; no aporta lectura, y el coral (#FB4A6E, reservado por la ficha a mascota/celebraciones/badge IA) se usa como color de dato. 2) Tarjeta "Parte de lo que cobras" queda sola a media fila con hueco muerto a la derecha (desencaje de la grilla). 3) Etiqueta cruda "qa ficha" en "Por tipo de funcion" (falta mapeo en featureLabel; jerga/datos de prueba en UI). 4) Movimiento casi nulo: sin stagger de entrada, sin conteo de cifras heroe, grafico sin dibujarse; reduced-motion no verificable. 5) Sin ayuda contextual para decidir: 24,4% "por encima del 20% sano" y 1 de 6 fallos no dicen que hacer (ajustar limite de uso, cambiar modelo) ni enlazan a Salud; la tira de navegacion superior queda cortada sin indicio claro.

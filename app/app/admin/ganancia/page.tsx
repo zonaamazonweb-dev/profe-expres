@@ -1,5 +1,6 @@
 import { adminPageData } from "@/lib/admin/page-data";
-import { PageTitle, Panel, RangeFilter, Section, SinDatos, Stat } from "@/components/admin/ui";
+import { PageTitle, Panel, RangeFilter, Section, SinDatos, Stat, StatGrid } from "@/components/admin/ui";
+import { ConfirmForm } from "@/components/admin/ConfirmForm";
 import { GastoForm } from "@/components/admin/GastoForm";
 import { deleteEntry } from "@/app/admin/gastos/actions";
 import { formatDate, formatMoney, formatPct, monthBounds } from "@/lib/admin/format";
@@ -32,33 +33,29 @@ export default async function GananciaPage({ searchParams }: { searchParams: Pro
         return (
           <section key={p.currency} className="flex flex-col gap-3" aria-label={`Ganancia en ${p.currency}`}>
             <h2 className="font-display text-[20px] font-extrabold">{p.currency}</h2>
-            <div className="grid gap-3 sm:grid-cols-3">
+            <StatGrid cols={3}>
               <Stat hero label="Cobrado (sin reembolsos)" value={formatMoney(p.income, p.currency)} />
-              <Stat hero label="Te quedaron limpios" badge="Estimación" value={formatMoney(p.profit, p.currency)} tono={p.profit <= 0 ? "malo" : "bueno"}
-                insight={`De ${formatMoney(p.income, p.currency)} cobrados, te quedaron ${formatMoney(p.profit, p.currency)} limpios.`} />
-              <Stat hero label="Margen" value={p.margin == null ? null : formatPct(p.margin)} tono={p.margin != null && p.margin < 0.4 ? "aviso" : "neutro"}
-                insight={p.margin == null ? undefined : p.margin >= 0.7 ? "Sano." : p.margin >= 0.4 ? "Aceptable, pero vigila los costos." : "Bajo: cada venta deja poco."} />
-            </div>
+              <Stat hero label="Te quedaron limpios" badge="Estimación" value={formatMoney(p.profit, p.currency)} tono={p.profit <= 0 ? "malo" : p.ai == null ? "aviso" : "bueno"}
+                insight={p.ai == null ? "Aún sin restar la IA: puede ser menos." : `De ${formatMoney(p.income, p.currency)} cobrados.`} />
+              <Stat hero span label="Margen" value={p.margin == null ? null : formatPct(p.margin)} tono={p.margin == null ? "neutro" : p.margin < 0.4 ? "aviso" : p.ai == null ? "neutro" : "bueno"}
+                insight={p.margin == null ? undefined : p.ai == null ? "Provisorio: falta restar el gasto de IA." : p.margin >= 0.7 ? "Sano." : p.margin >= 0.4 ? "Aceptable, vigila los costos." : "Bajo: cada venta deja poco."} />
+            </StatGrid>
             <Panel className="!p-0">
-              <table className="w-full text-[13px]">
-                <caption className="sr-only">De lo cobrado a lo que te quedó, en {p.currency}</caption>
-                <tbody className="divide-y divide-border">
-                  {filas.map((f) => (
-                    <tr key={f.label}>
-                      <td className="px-4 py-2.5 font-bold">{f.label}</td>
-                      <td className="whitespace-nowrap px-4 py-2.5 text-right font-extrabold tabular-nums" style={{ color: f.value != null && f.value < 0 ? "#E5484D" : undefined }}>
-                        {f.value == null ? <span className="text-muted-foreground">No se pudo restar</span> : formatMoney(f.value, p.currency)}
-                      </td>
-                      <td className="w-16 px-4 py-2.5 text-right text-[12px] text-muted-foreground">{f.value != null && p.income > 0 ? formatPct(Math.abs(f.value) / p.income) : ""}</td>
-                    </tr>
-                  ))}
-                  <tr className="bg-[var(--sunken)]">
-                    <td className="px-4 py-3 font-extrabold">Te quedaron</td>
-                    <td className="px-4 py-3 text-right font-display text-[18px] font-extrabold tabular-nums">{formatMoney(p.profit, p.currency)}</td>
-                    <td />
-                  </tr>
-                </tbody>
-              </table>
+              <h3 className="sr-only">De lo cobrado a lo que te quedó, en {p.currency}</h3>
+              <ul className="divide-y divide-border text-[13px]">
+                {filas.map((f) => (
+                  <li key={f.label} className="flex items-baseline justify-between gap-3 px-4 py-3">
+                    <span className="font-bold">{f.label}{f.value != null && p.income > 0 && f.value !== p.income ? <span className="ml-1.5 text-[11.5px] font-normal text-muted-foreground">{formatPct(Math.abs(f.value) / p.income)}</span> : null}</span>
+                    <span className="whitespace-nowrap text-right font-extrabold tabular-nums" style={{ color: f.value != null && f.value < 0 ? "#E5484D" : undefined }}>
+                      {f.value == null ? <span className="font-bold text-muted-foreground">No se pudo restar</span> : formatMoney(f.value, p.currency)}
+                    </span>
+                  </li>
+                ))}
+                <li className="flex items-baseline justify-between gap-3 bg-[var(--sunken)] px-4 py-3">
+                  <span className="font-extrabold">Te quedaron</span>
+                  <span className="font-display text-[18px] font-extrabold tabular-nums">{formatMoney(p.profit, p.currency)}</span>
+                </li>
+              </ul>
             </Panel>
             <div className="rounded-[20px] border-[1.5px] border-dashed border-border p-4">
               <p className="text-[12px] font-extrabold uppercase tracking-wide text-muted-foreground">Por qué esto es una estimación</p>
@@ -74,26 +71,24 @@ export default async function GananciaPage({ searchParams }: { searchParams: Pro
         <GastoForm tipo="costo" canAct={admin.mfaVerified} currencyDefault={moneda} mes={mes} />
         <div className="mt-3">
           {o.costs.length === 0 ? <SinDatos>Aún no registraste costos.</SinDatos> : (
-            <Panel className="overflow-x-auto !p-0">
-              <table className="w-full min-w-[560px] text-left text-[13px]">
-                <thead><tr className="border-b border-border text-[10.5px] font-extrabold uppercase tracking-wide text-muted-foreground">
-                  <th className="px-4 py-3">Costo</th><th className="px-3 py-3">Periodo</th><th className="px-3 py-3 text-right">Monto</th><th className="px-4 py-3" /></tr></thead>
-                <tbody className="divide-y divide-border">
-                  {o.costs.map((c) => (
-                    <tr key={c.id}>
-                      <td className="px-4 py-3 font-bold">{KIND[c.kind]}{c.note ? <span className="font-normal text-muted-foreground"> · {c.note}</span> : null}</td>
-                      <td className="px-3 py-3 text-muted-foreground">{formatDate(c.period_start)} – {formatDate(c.period_end)}</td>
-                      <td className="whitespace-nowrap px-3 py-3 text-right font-extrabold">{formatMoney(c.amount_minor, c.currency)}</td>
-                      <td className="px-4 py-3 text-right">
-                        {admin.mfaVerified && (
-                          <form action={deleteEntry}><input type="hidden" name="table" value="cost_entries" /><input type="hidden" name="id" value={c.id} />
-                            <button className="text-[12px] font-bold text-muted-foreground hover:text-[#E5484D]">Quitar</button></form>
-                        )}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+            <Panel className="!p-0">
+              <ul className="divide-y divide-border">
+                {o.costs.map((c) => (
+                  <li key={c.id} className="flex flex-wrap items-center justify-between gap-x-3 gap-y-1 px-4 py-3 text-[13px]">
+                    <div className="min-w-0">
+                      <p className="font-bold">{KIND[c.kind]}{c.note ? <span className="font-normal text-muted-foreground"> · {c.note}</span> : null}</p>
+                      <p className="text-[12px] text-muted-foreground">{formatDate(c.period_start)} – {formatDate(c.period_end)}</p>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <span className="whitespace-nowrap font-extrabold">{formatMoney(c.amount_minor, c.currency)}</span>
+                      {admin.mfaVerified && (
+                        <ConfirmForm action={deleteEntry} fields={{ table: "cost_entries", id: String(c.id) }} label="Quitar"
+                          confirmText="¿Quitar este costo?" confirmLabel="Sí, quitar" />
+                      )}
+                    </div>
+                  </li>
+                ))}
+              </ul>
             </Panel>
           )}
         </div>

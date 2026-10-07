@@ -1,9 +1,9 @@
-# VEREDICTO revisor-visual — admin-ganancia
+# VEREDICTO revisor-visual — admin ganancia
 Fecha: 2026-10-07 12:00
-Screenshot: docs/revisiones/admin/ganancia-375-1.png
-Usabilidad: 23/40
-Craft: 9/20
+Screenshot: docs/revisiones/admin/ganancia-375-2.png
+Usabilidad: 24/40
+Craft: 10/20
 Copy (si vende): N-A
 Fidelidad (si hubo referencia): N-A
 Veredicto: NO LISTA
-Top defectos: 1) Tabla "Costos que solo tú conoces" con min-w 560px: a 375px la columna Monto y el botón Quitar quedan fuera de vista (scroll horizontal, ganancia-375-4). 2) "Quitar" borra un costo sin confirmación ni deshacer (ganancia/page.tsx L89-91); además el aviso dice "anótalos en «Ganancia real»" estando ya en esa pantalla. 3) Verdad engañosa: "Te quedaron limpios 5,52 USD" con insight verde "bueno" y margen 4% "Bajo"; en BRL margen 90% "Sano" aunque la IA no se pudo restar. 4) Tres cifras héroe del mismo peso (32px) repetidas luego en insight y total de la tabla: ruido, sin un solo dato dominante; tabla de 8 filas con varias en 0. 5) Fila final "5,52 / USD" se parte en dos líneas (falta whitespace-nowrap), etiquetas largas envuelven, pestaña "Ganancia real" recortada en la barra superior; página sin ningún movimiento (eje 0); jerga Resend/Vercel/Supabase; formato "34.12 USD" vs "34,12 USD".
+Top defectos: 1) Carga cognitiva: bloques USD y BRL repiten la misma estructura (3 stats + tabla de 9 filas + 4-5 viñetas de aviso) y "Te quedaron" aparece 3 veces por moneda (stat, fila final, y repetido entre monedas); simplificar a una moneda visible con la otra plegada y avisos en 2 viñetas. 2) Stat cards hero en 2 columnas a 375px: etiquetas se parten en 2-3 líneas ("Te quedaron limpios" + badge "Estimación" se pisan), alturas desiguales; poner el badge bajo el valor o cards a ancho completo. 3) Desvío de FICHA-ARTE: las stat cards tienen borde lila marcado, la ficha pide cards sin borde que se distinguen por el salto fondo/superficie; además el rojo se fija como #E5484D hardcodeado en el código (page.tsx línea 49) en vez de token. 4) Lenguaje/consistencia: "Aún no se concilia con la liquidación de Hotmart" es jerga; cifras mezclan "34.12 USD" (punto) con "34,12 USD" (coma) y "24 %" con espacio; datos de prueba visibles ("Servidores · QA"). 5) Movimiento: sin evidencia en el código de la página (sin stagger, conteo del héroe ni transiciones); sin prevención en el formulario de costo visible y sin atajos (solo 3 rangos), h7/h5 bajas.

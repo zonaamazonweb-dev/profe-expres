@@ -5,10 +5,10 @@ import { usePathname } from "next/navigation";
 import { House, Sparkle, CalendarBlank, ClockCounterClockwise } from "@phosphor-icons/react";
 
 const DESTINOS = [
-  { href: "/", label: "Inicio", Icon: House },
-  { href: "/crear", label: "Crear", Icon: Sparkle },
-  { href: "/planner", label: "Planner", Icon: CalendarBlank },
-  { href: "/historial", label: "Historial", Icon: ClockCounterClockwise },
+  { href: "/app", label: "Inicio", Icon: House },
+  { href: "/app/crear", label: "Crear", Icon: Sparkle },
+  { href: "/app/planner", label: "Planner", Icon: CalendarBlank },
+  { href: "/app/historial", label: "Historial", Icon: ClockCounterClockwise },
 ] as const;
 
 export function BottomNav() {
@@ -21,7 +21,7 @@ export function BottomNav() {
     >
       <div className="mx-auto flex max-w-md items-stretch justify-around">
         {DESTINOS.map(({ href, label, Icon }) => {
-          const activo = href === "/" ? pathname === "/" : pathname.startsWith(href);
+          const activo = href === "/app" ? pathname === "/app" : pathname.startsWith(href);
           return (
             <Link
               key={href}

@@ -29,6 +29,7 @@ export interface GenerarFichaParams {
   pais: string;
   tiposPregunta: TipoPregunta[];
   cantidadPreguntas: number;
+  userId?: string;
 }
 
 export interface FichaGenerada {
@@ -94,6 +95,7 @@ export async function generarFicha(
       feature: "ficha",
       model: env.AI_MODEL,
       status: "error",
+      userId: params.userId,
       latencyMs: Date.now() - inicio,
       error: err instanceof Error ? err.message : "fallo de red",
     });
@@ -106,6 +108,7 @@ export async function generarFicha(
       feature: "ficha",
       model: env.AI_MODEL,
       status: "error",
+      userId: params.userId,
       latencyMs: Date.now() - inicio,
       error: `HTTP ${res.status}`,
     });
@@ -122,6 +125,7 @@ export async function generarFicha(
     feature: "ficha",
     model: env.AI_MODEL,
     status: "ok",
+    userId: params.userId,
     tokensIn: data.usage?.input_tokens ?? null,
     tokensOut: data.usage?.output_tokens ?? null,
     latencyMs: Date.now() - inicio,

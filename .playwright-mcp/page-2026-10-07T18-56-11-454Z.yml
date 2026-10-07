@@ -1,0 +1,110 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - generic [ref=e3]:
+      - generic [ref=e4]:
+        - generic [ref=e5]: Panel · Profe Exprés
+        - button "Salir" [ref=e7]
+      - navigation "Panel de administración" [ref=e8]:
+        - link "Resumen" [ref=e9] [cursor=pointer]:
+          - /url: /admin
+        - link "Ventas" [ref=e12] [cursor=pointer]:
+          - /url: /admin/ventas
+        - link "Ganancia real" [ref=e15] [cursor=pointer]:
+          - /url: /admin/ganancia
+        - link "Usuarias" [ref=e18] [cursor=pointer]:
+          - /url: /admin/usuarias
+        - link "Uso" [ref=e21] [cursor=pointer]:
+          - /url: /admin/uso
+        - link "Negocio" [ref=e24] [cursor=pointer]:
+          - /url: /admin/negocio
+        - link "IA" [ref=e27] [cursor=pointer]:
+          - /url: /admin/ia
+        - link "Salud" [ref=e30] [cursor=pointer]:
+          - /url: /admin/salud
+        - link "Seguridad" [ref=e33] [cursor=pointer]:
+          - /url: /admin/seguridad
+    - main [ref=e36]:
+      - generic [ref=e38]:
+        - generic [ref=e39]:
+          - generic [ref=e40]:
+            - heading "Resumen" [level=1] [ref=e41]
+            - paragraph [ref=e42]: Tu negocio de un vistazo, con lo que necesita tu atención arriba.
+          - group "Rango de fechas" [ref=e43]:
+            - link "7 días" [ref=e44] [cursor=pointer]:
+              - /url: /admin?rango=7d
+            - link "30 días" [ref=e45] [cursor=pointer]:
+              - /url: /admin?rango=30d
+            - link "90 días" [ref=e46] [cursor=pointer]:
+              - /url: /admin?rango=90d
+        - alert [ref=e47]:
+          - generic [ref=e48]:
+            - paragraph [ref=e49]: La IA se está comiendo el 24% de lo que cobras
+            - paragraph [ref=e50]: "Por qué importa: Lo sano es menos del 20%. Cada ficha te deja menos margen de lo planeado."
+            - paragraph [ref=e51]: "Qué hacer: Revisa los límites de uso por usuaria o sube el precio del plan."
+            - link "Ver el gasto de IA →" [ref=e52] [cursor=pointer]:
+              - /url: /admin/ia
+          - generic [ref=e53]:
+            - paragraph [ref=e54]: Hotmart te avisó 3 veces en el último día y falló
+            - paragraph [ref=e55]: "Por qué importa: Los pagos podrían no estar dando acceso, o dárselo a quien no pagó."
+            - paragraph [ref=e56]: "Qué hacer: Abre «Salud» para ver qué falló y revisa la conexión con Hotmart."
+            - link "Abrir Salud →" [ref=e57] [cursor=pointer]:
+              - /url: /admin/salud
+          - generic [ref=e58]:
+            - paragraph [ref=e59]: Un mismo error se repitió 6 veces
+            - paragraph [ref=e60]: "Por qué importa: Algo está fallando para varias personas."
+            - paragraph [ref=e61]: "Qué hacer: Abre «Salud» y revisa el más frecuente primero."
+            - link "Abrir Salud →" [ref=e62] [cursor=pointer]:
+              - /url: /admin/salud
+        - generic [ref=e63]:
+          - generic [ref=e64]:
+            - paragraph [ref=e66]: Facturaste (USD)
+            - paragraph [ref=e67]: 159,98 USD
+            - paragraph [ref=e68]: ↑ 300% frente al periodo anterior · También hay ventas en BRL (mira Ventas)
+          - generic [ref=e69]:
+            - generic [ref=e70]:
+              - paragraph [ref=e71]: Te quedaron limpios
+              - generic [ref=e72]: Estimación
+            - paragraph [ref=e73]: 5,53 USD
+            - paragraph [ref=e74]: Margen del 4 % sobre lo cobrado
+        - generic [ref=e75]:
+          - generic [ref=e76]:
+            - paragraph [ref=e78]: Clientas con acceso
+            - paragraph [ref=e79]: "3"
+            - paragraph [ref=e80]: 3 pagando · 0 a mano
+          - generic [ref=e81]:
+            - paragraph [ref=e83]: Ingreso mensual (USD)
+            - paragraph [ref=e84]: 29,99 USD
+            - paragraph [ref=e85]: De cuentas pagas vigentes.
+          - generic [ref=e86]:
+            - paragraph [ref=e88]: Fichas creadas
+            - paragraph [ref=e89]: "5"
+            - paragraph [ref=e90]: Hoy 1 · 7 días 3
+          - generic [ref=e91]:
+            - paragraph [ref=e93]: Gasto en IA
+            - paragraph [ref=e94]: 34,12 USD
+            - paragraph [ref=e95]: 6 llamadas
+        - paragraph [ref=e96]: "Hicieron su primera ficha: 75 % (3 de 4)."
+        - generic [ref=e97]:
+          - heading "Ventas por día" [level=2] [ref=e98]
+          - 'img "Ventas USD. Total del periodo: 159,98 USD." [ref=e101]':
+            - application [ref=e105]:
+              - generic [ref=e122]:
+                - generic [ref=e123]:
+                  - generic [ref=e124]: 9/9
+                  - generic [ref=e126]: 16/9
+                  - generic [ref=e128]: 23/9
+                  - generic [ref=e130]: 30/9
+                  - generic [ref=e132]: 7/10
+                - generic [ref=e134]:
+                  - generic [ref=e135]: "0"
+                  - generic [ref=e137]: "30"
+                  - generic [ref=e139]: "60"
+                  - generic [ref=e141]: "90"
+                  - generic [ref=e143]: "120"
+        - group [ref=e145]:
+          - generic "Qué está conectado · 3 de 5 listas" [ref=e146] [cursor=pointer]:
+            - text: Qué está conectado
+            - generic [ref=e147]: · 3 de 5 listas
+  - button "Open Next.js Dev Tools" [ref=e153] [cursor=pointer]
+  - alert [ref=e157]
+  - generic [aria-hidden] [ref=e158]: "0"

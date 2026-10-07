@@ -1,0 +1,45 @@
+- generic [active] [ref=f14e1]:
+  - generic [ref=f14e2]:
+    - main [ref=f14e3]:
+      - generic [ref=f14e4]:
+        - heading "Tu planner semanal" [level=1] [ref=f14e5]
+        - paragraph [ref=f14e6]: Arma todas las fichas de la semana en un solo flujo — el eje central de Profe Exprés.
+        - generic [ref=f14e7]:
+          - text: Grado
+          - combobox [ref=f14e8]:
+            - option "1.º grado"
+            - option "2.º grado"
+            - option "3.º grado" [selected]
+            - option "4.º grado"
+            - option "5.º grado"
+            - option "6.º grado"
+        - generic [ref=f14e10]:
+          - generic [ref=f14e11]:
+            - combobox [ref=f14e12]:
+              - option "Lunes" [selected]
+              - option "Martes"
+              - option "Miércoles"
+              - option "Jueves"
+              - option "Viernes"
+            - combobox [ref=f14e13]:
+              - option "Matemática" [selected]
+              - option "Lengua"
+              - option "Ciencias Naturales"
+              - option "Ciencias Sociales"
+              - option "Inglés"
+            - button "Quitar bloque" [ref=f14e14]
+          - textbox "Tema de esta clase" [ref=f14e17]
+        - button "Agregar clase" [ref=f14e18]
+        - button "Generar mi semana" [ref=f14e21]
+    - navigation "Navegación principal" [ref=f14e24]:
+      - generic [ref=f14e25]:
+        - link [ref=f14e26] [cursor=pointer]:
+          - /url: /app
+        - link [ref=f14e30] [cursor=pointer]:
+          - /url: /app/crear
+        - link [ref=f14e34] [cursor=pointer]:
+          - /url: /app/planner
+        - link [ref=f14e38] [cursor=pointer]:
+          - /url: /app/historial
+  - button "Open Next.js Dev Tools" [ref=f14e47] [cursor=pointer]
+  - alert [ref=f14e51]

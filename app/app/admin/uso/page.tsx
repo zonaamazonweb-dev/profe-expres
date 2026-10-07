@@ -1,5 +1,5 @@
 import { adminPageData } from "@/lib/admin/page-data";
-import { PageTitle, Panel, RangeFilter, Section, SinDatos, Stat } from "@/components/admin/ui";
+import { PageTitle, Panel, RangeFilter, Section, SinDatos, Stat, StatGrid } from "@/components/admin/ui";
 import { TrendChart } from "@/components/admin/charts";
 import { formatInt, formatPct, timeAgo } from "@/lib/admin/format";
 import { ACTION_EVENT, activation, currWeekly, fillDays, funnel, ghostPayers, mainActionCounts, productUsers, retentionDn, dayKey } from "@/lib/admin/metrics";
@@ -23,42 +23,43 @@ export default async function UsoPage({ searchParams }: { searchParams: Promise<
   const series = fillDays(o.range, byDay);
   const totalActions = series.reduce((a, d) => a + d.value, 0);
 
-  const sinCuentas = "Hace falta que haya usuarias con cuenta (el login llega con el embudo).";
+  const sinCuentas = "Hace falta que haya usuarias con cuenta.";
+  const poca = (n: number) => (n > 0 && n < 5 ? " · muestra chica, no concluyas aún" : "");
   return (
     <div className="flex flex-col gap-6">
       <PageTitle titulo="Uso" sub="Si tu app retiene: quién empieza, quién vuelve y en qué paso se pierde gente." right={<RangeFilter base="/admin/uso" actual={rango.id} />} />
 
       <Section titulo="Activación y retención">
-        <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
-          <Stat label="Hicieron su primera ficha" value={act.rate == null ? null : formatPct(act.rate)} insight={act.rate == null ? sinCuentas : `${act.activated} de ${act.total} usuarias`} />
-          <Stat label="Volvieron al día 1" value={d1.rate == null ? null : formatPct(d1.rate)} insight={d1.rate == null ? "Aún no hay cuentas con 2 días de antigüedad." : `${d1.retained} de ${d1.eligible}`} />
-          <Stat label="Volvieron al día 7" value={d7.rate == null ? null : formatPct(d7.rate)} insight={d7.rate == null ? "Aún no hay cuentas con 8 días de antigüedad." : `${d7.retained} de ${d7.eligible}`} />
-          <Stat label="Volvieron al día 30" value={d30.rate == null ? null : formatPct(d30.rate)} insight={d30.rate == null ? "Aún no hay cuentas con 31 días de antigüedad." : `${d30.retained} de ${d30.eligible}`} />
-        </div>
-        <div className="mt-3 grid gap-3 sm:grid-cols-2">
+        <StatGrid>
+          <Stat label="Hicieron su primera ficha" value={act.rate == null ? null : formatPct(act.rate)} insight={act.rate == null ? sinCuentas : `${act.activated} de ${act.total} usuarias${poca(act.total)}`} />
+          <Stat label="Volvieron al día 1" value={d1.rate == null ? null : formatPct(d1.rate)} insight={d1.rate == null ? "Aún no hay cuentas con 2 días de antigüedad." : `${d1.retained} de ${d1.eligible}${poca(d1.eligible)}`} />
+          <Stat label="Volvieron al día 7" value={d7.rate == null ? null : formatPct(d7.rate)} insight={d7.rate == null ? "Aún no hay cuentas con 8 días de antigüedad." : `${d7.retained} de ${d7.eligible}${poca(d7.eligible)}`} />
+          <Stat label="Volvieron al día 30" value={d30.rate == null ? null : formatPct(d30.rate)} insight={d30.rate == null ? "Aún no hay cuentas con 31 días de antigüedad." : `${d30.retained} de ${d30.eligible}${poca(d30.eligible)}`} />
+        </StatGrid>
+        <div className="mt-3"><StatGrid cols={2}>
           <Stat label="Regreso semanal" value={curr.rate == null ? null : formatPct(curr.rate)}
             insight={curr.rate == null ? "Compara a las que usaron la app la semana pasada con las que volvieron esta." : `${curr.returned} de ${curr.base} volvieron esta semana`} />
           <Stat label="Pagan pero no entran hace 14+ días" value={o.profiles.some((p) => p.access_origin === "hotmart") ? formatInt(ghosts.length) : null}
             tono={ghosts.length > 0 ? "aviso" : "neutro"}
             insight={ghosts.length > 0 ? "Son las que más se van al renovar y las más fáciles de recuperar: escríbeles." : "Sin pagadoras todavía."} />
-        </div>
+        </StatGrid></div>
       </Section>
 
-      <Section titulo="Acción principal: crear fichas" sub="Cuántas veces se usó lo que tu app promete.">
-        <div className="grid gap-3 sm:grid-cols-3">
+      <Section titulo="Acción principal: crear fichas" sub="Cuántas veces se usó lo que tu app promete. Estos 3 contadores van por días fijos: no cambian con el rango de arriba.">
+        <StatGrid cols={3}>
           <Stat label="Hoy" value={o.events.some((e) => e.type === ACTION_EVENT) ? formatInt(actions.today) : null} />
           <Stat label="Últimos 7 días" value={o.events.some((e) => e.type === ACTION_EVENT) ? formatInt(actions.week) : null} />
-          <Stat label="Últimos 30 días" value={o.events.some((e) => e.type === ACTION_EVENT) ? formatInt(actions.month) : null} />
-        </div>
+          <Stat label="Últimos 30 días" value={o.events.some((e) => e.type === ACTION_EVENT) ? formatInt(actions.month) : null} span />
+        </StatGrid>
         <div className="mt-3">
-          {totalActions > 0 ? <Panel><TrendChart data={series} label="Fichas por día" format={{ kind: "int" }} /></Panel>
+          {totalActions > 0 ? <Panel><p className="mb-1 text-[12px] font-bold text-muted-foreground">Fichas por día · {rango.label}</p><TrendChart data={series} label="Fichas por día" format={{ kind: "int" }} /></Panel>
             : <SinDatos>Sin fichas creadas en este periodo.</SinDatos>}
         </div>
       </Section>
 
       <Section titulo="Camino de venta" sub="Dónde se va la gente entre el quiz y el pago.">
         {!funnelHasData ? (
-          <SinDatos>El camino de venta (quiz → ventas → Hotmart) todavía no existe: se mide solo cuando lo construyamos. Pasos que se medirán: {steps.map((s) => s.label.toLowerCase()).join(" → ")}.</SinDatos>
+          <SinDatos>Todavía nadie recorrió el camino de venta. Se mide solo en cuanto llegue la primera visita: {steps.map((s) => s.label.toLowerCase()).join(" → ")}.</SinDatos>
         ) : (
           <Panel>
             <ol className="flex flex-col gap-3">

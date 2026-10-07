@@ -1,8 +1,7 @@
 "use client";
 
-import { useId } from "react";
 import {
-  Area, AreaChart, Bar, BarChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis, Cell,
+  Bar, BarChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis, Cell,
 } from "recharts";
 
 /** Gráficos al estilo Tufte (17): máximo dato, mínima tinta. Sin 3D, sin rejas verticales, etiqueta directa. */
@@ -37,29 +36,23 @@ export function TrendChart({
   data, label, format: fmt, color = BRAND,
 }: { data: Array<{ day: string; value: number }>; label: string; format: ValueFormat; color?: string }) {
   const format = (v: number) => applyFormat(fmt, v);
-  const gid = `g-${useId().replace(/[^a-zA-Z0-9_-]/g, "")}`;
   const total = data.reduce((a, d) => a + d.value, 0);
   return (
     <figure role="img" aria-label={`${label}. Total del periodo: ${format(total)}.`} className="m-0">
-      <div className="h-[210px] w-full">
+      <div className="h-[200px] w-full">
         <ResponsiveContainer width="100%" height="100%">
-          <AreaChart data={data} margin={{ top: 8, right: 8, left: 0, bottom: 0 }}>
-            <defs>
-              <linearGradient id={gid} x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stopColor={color} stopOpacity={0.28} />
-                <stop offset="100%" stopColor={color} stopOpacity={0.02} />
-              </linearGradient>
-            </defs>
+          <BarChart data={data} margin={{ top: 8, right: 4, left: 0, bottom: 0 }} barCategoryGap="18%">
             <CartesianGrid vertical={false} stroke="var(--border)" />
-            <XAxis dataKey="day" tickFormatter={shortDay} tick={{ fill: INK, fontSize: 11 }} axisLine={false} tickLine={false} minTickGap={28} />
-            <YAxis tickFormatter={(v: number) => axisTick(fmt, v)} tick={{ fill: INK, fontSize: 11 }} axisLine={false} tickLine={false} width={44} allowDecimals={fmt.kind !== "int"} />
+            <XAxis dataKey="day" tickFormatter={shortDay} tick={{ fill: INK, fontSize: 11 }} axisLine={false} tickLine={false} minTickGap={32} />
+            <YAxis tickFormatter={(v: number) => axisTick(fmt, v)} tick={{ fill: INK, fontSize: 11 }} axisLine={false} tickLine={false} width={40} allowDecimals={fmt.kind !== "int"} />
             <Tooltip
               formatter={(v) => [format(Number(v)), label]}
               labelFormatter={(l) => shortDay(String(l))}
+              cursor={{ fill: "color-mix(in oklab, var(--primary) 8%, transparent)" }}
               contentStyle={{ borderRadius: 12, border: "1px solid var(--border)", fontSize: 12 }}
             />
-            <Area type="monotone" dataKey="value" stroke={color} strokeWidth={2.5} fill={`url(#${gid})`} isAnimationActive={false} />
-          </AreaChart>
+            <Bar dataKey="value" fill={color} radius={[5, 5, 0, 0]} isAnimationActive={false} minPointSize={0} />
+          </BarChart>
         </ResponsiveContainer>
       </div>
     </figure>

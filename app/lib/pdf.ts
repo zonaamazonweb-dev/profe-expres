@@ -67,6 +67,8 @@ export function descargarFichaPdf(ficha: Ficha): void {
     y += 10;
   });
 
+  agregarSolucionario(doc, ficha, margen, ancho);
+
   const nombreArchivo = `${ficha.materia}-${ficha.tema}`
     .toLowerCase()
     .normalize("NFD")
@@ -74,4 +76,35 @@ export function descargarFichaPdf(ficha: Ficha): void {
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/(^-|-$)/g, "");
   doc.save(`${nombreArchivo || "ficha"}.pdf`);
+}
+
+/** Última hoja del PDF, aparte de la ficha: las respuestas que la IA ya generó, para que la docente corrija rápido. */
+function agregarSolucionario(doc: jsPDF, ficha: Ficha, margen: number, ancho: number): void {
+  const filas = ficha.preguntas.map((p, i) => ({
+    n: i + 1,
+    respuesta: p.tipo === "opcion_multiple" ? p.respuestaCorrecta : p.respuestaSugerida,
+  }));
+  if (!filas.some((f) => f.respuesta)) return;
+
+  doc.addPage();
+  let y = margen;
+  doc.setFont("helvetica", "bold");
+  doc.setFontSize(14);
+  doc.text("Solucionario (solo para la docente)", margen, y);
+  y += 18;
+  doc.setFont("helvetica", "normal");
+  doc.setFontSize(10);
+  doc.text(`${ficha.materia} · ${ficha.grado} · ${ficha.tema}`, margen, y);
+  y += 22;
+
+  for (const f of filas) {
+    if (!f.respuesta) continue;
+    const lineas = doc.splitTextToSize(`${f.n}. ${f.respuesta}`, ancho);
+    if (y + lineas.length * 13 > doc.internal.pageSize.getHeight() - margen) {
+      doc.addPage();
+      y = margen;
+    }
+    doc.text(lineas, margen, y);
+    y += lineas.length * 13 + 6;
+  }
 }

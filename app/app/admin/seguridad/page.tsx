@@ -41,8 +41,8 @@ export default async function SeguridadPage({ searchParams }: { searchParams: Pr
         ) : (
           <ul className="divide-y divide-border overflow-hidden rounded-[20px] bg-card">
             {audit.map((a) => (
-              <li key={a.id} className="flex items-center justify-between gap-3 px-4 py-3 text-[13px]">
-                <span className="font-bold">{ACCIONES[a.action] ?? a.action}{a.target_email ? ` · ${a.target_email}` : ""}</span>
+              <li key={a.id} className="flex flex-col gap-0.5 px-4 py-3 text-[13px] sm:flex-row sm:items-center sm:justify-between sm:gap-3">
+                <span className="min-w-0 break-words font-bold">{ACCIONES[a.action] ?? a.action}{a.target_email ? ` · ${a.target_email}` : ""}</span>
                 <time className="shrink-0 text-[12px] text-muted-foreground">
                   {new Date(a.created_at).toLocaleString("es", { dateStyle: "medium", timeStyle: "short" })}
                 </time>
@@ -51,6 +51,10 @@ export default async function SeguridadPage({ searchParams }: { searchParams: Pr
           </ul>
         )}
       </section>
+
+      <p className="rounded-[20px] bg-card p-4 text-[12.5px] text-muted-foreground">
+        <b className="text-foreground">¿Perdiste tu app de verificación?</b> No podrás entrar al panel hasta restablecerla. Guarda el código de respaldo que te dio al activarla, o quita el factor desde el panel de Supabase (Authentication → Users → tu cuenta).
+      </p>
     </div>
   );
 }

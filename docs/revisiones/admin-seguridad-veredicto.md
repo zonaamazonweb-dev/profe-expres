@@ -1,9 +1,9 @@
-# VEREDICTO revisor-visual — admin-seguridad
-Fecha: 2026-10-07 14:00
-Screenshot: docs/revisiones/admin/seguridad-375-1.png
-Usabilidad: 27/40
-Craft: 10/20
+# VEREDICTO revisor-visual — admin seguridad
+Fecha: 2026-10-07 12:00
+Screenshot: docs/revisiones/admin/seguridad-375-2.png
+Usabilidad: 33/40
+Craft: 12/20
 Copy (si vende): N-A
 Fidelidad (si hubo referencia): N-A
 Veredicto: NO LISTA
-Top defectos: 1) Barra de pestañas superior: la pestaña activa subrayada es "Resumen" estando en Seguridad; la pestaña Seguridad no se ve (queda cortada fuera de pantalla, sin indicio de scroll) -> marcar la activa por ruta y hacer scrollIntoView / mostrar fade lateral. 2) Registro de actividad: el correo se parte a media palabra ("qa-/manual@...") y la fecha compite en la misma fila -> apilar acción arriba y fecha/correo debajo (break-all en correo, fecha en línea propia). 3) Pantalla sin movimiento (cero entrada escalonada, ningún conteo ni transición; MfaPanel/page sin motion ni reduced-motion) y hueco muerto de ~40% de la pantalla -> stagger de entrada con Motion, y completar con contenido útil (p. ej. cómo desactivar/cambiar la verificación, ayuda si pierdes el celular). Otros: sin forma de desactivar/cambiar la doble verificación ni recuperación (h3/h7), micro-texto 12-12.5px, sin dispositivo ownable propio.
+Top defectos: 1) Profundidad/identidad planas: cards blancas sobre crema sin sombra tintada, sin dispositivo ownable (anillo/mascota) en esta pantalla; 2) Sin movimiento verificable en el codigo (sin motion, stagger ni whileTap en botones; solo disabled:opacity-60 en "Verificar"/CTAs); 3) Aviso MFA con jerarquia debil: icono ambar + texto, el campo de codigo y "Verificar" no se leen como siguiente paso unico, y el boton queda con peso similar a la pestana activa del nav; 4) Registro de actividad muestra email de prueba qa-manual@example.com cortado en dos lineas ("qa-" / "manual@..."), sin icono ni distincion por tipo de accion; 5) Texto de ayuda final de 12.5px con flecha "Authentication -> Users" es jerga de Supabase para la duena; sin undo/ayuda para reintento ante codigo invalido (no verificado en captura).

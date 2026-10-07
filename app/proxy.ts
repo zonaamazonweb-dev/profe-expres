@@ -26,17 +26,17 @@ export async function proxy(request: NextRequest) {
     });
     const { data } = await supabase.auth.getUser();
 
-    if (pathname.startsWith("/admin") && !data.user) {
+    if ((pathname.startsWith("/admin") || pathname.startsWith("/app")) && !data.user) {
       const login = new URL("/login", request.url);
       login.searchParams.set("next", pathname);
       return NextResponse.redirect(login);
     }
-  } else if (pathname.startsWith("/admin")) {
+  } else if (pathname.startsWith("/admin") || pathname.startsWith("/app")) {
     // Sin configuración de Supabase el panel queda cerrado (fail-closed).
     return NextResponse.redirect(new URL("/login", request.url));
   }
 
-  if (pathname.startsWith("/admin") || pathname === "/login") {
+  if (pathname.startsWith("/admin") || pathname.startsWith("/app") || pathname === "/login") {
     response.headers.set("Cache-Control", "no-store");
   }
   return response;

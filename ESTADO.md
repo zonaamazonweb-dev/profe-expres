@@ -1,7 +1,7 @@
 # ESTADO — Profe Exprés
-Última actualización: 2026-09-25 | Sesión actual: 1
+Última actualización: 2026-10-07 | Sesión actual: 6
 
-⏸️ CHECKPOINT — Panel de administración construido y verificado (18 pruebas de fórmulas, pruebas de ataque de seguridad OK, MFA activa, alta manual probada); pendiente su revisión visual independiente (capturas en docs/revisiones/admin) y subir variables de Supabase a Vercel para producción. ANÁLISIS DEL FUNNEL entregado (referencia quiz.gomezmaria.site, 10 etapas, oferta con scroll); NO se escribió código del funnel: espera el OK del usuario y 8 decisiones (precio, garantía, link Hotmart, soporte, solucionario en PDF, límite de uso, mover app a /app con protección, testimonios beta). Siguiente acción exacta: con su OK, construir el funnel público en `/` y mover la app privada a `/app`.
+⏸️ CHECKPOINT (2026-10-07) — CAMINO DE VENTA PÚBLICO CONSTRUIDO (sin Hotmart todavía). App privada movida a `/app` con acceso solo para cuentas activas. Panel de administración rehecho 2 rondas: sigue NO LISTA en revisión visual (24-33/40, 10-12/20). Siguiente acción exacta: (1) recibir del dueño precio, garantía, link de Hotmart, correo de soporte y video; (2) corregir lo que marque el revisor del camino de venta; (3) 3ª ronda del panel; (4) solo cuando el dueño lo pida: Hotmart + webhook + Resend.
 
 ## Qué es esta app (3 líneas máximo)
 Generador de fichas de actividades escolares en PDF para docentes de primaria hispanohablantes (cualquier país): el profesor elige materia, tema, grado, país/currículo y tipo de preguntas, y la IA arma en un solo flujo la semana completa de fichas (no una por una), listas para imprimir. Suscripción mensual.
@@ -59,6 +59,23 @@ Generador de fichas de actividades escolares en PDF para docentes de primaria hi
 - Modelo de datos (borrador, se afina en la sesión de base de datos): `fichas` (materia, tema, grado, país, tipo, contenido_json, pdf_url, user_id, semana_id) · `semanas` (agrupador del modo lote, user_id) · `perfiles` (plan activo, país por defecto) — RLS por `user_id = auth.uid()` en todas
 - Modelo de IA: texto → documento estructurado (JSON con encabezado + preguntas variadas) que se pinta en una plantilla PDF fija; generación en lote = varias fichas por sesión → arquitectura ASÍNCRONA con estado de progreso visible (no bloquear al usuario esperando 5-7 documentos). Proveedor concreto vía `AI_MODEL` (env var) — se fija en la sesión de Integración de IA (`30`)
 - Eje único de diferenciación: ÁNGULO — generación en LOTE semanal, país/currículo como selector dentro del producto (no versión de marca separada) — decidido a pedido del usuario, app para todo profesor hispanohablante
+
+## Camino de venta público (construido 2026-10-07)
+TERMINADO:
+- Rutas públicas: `/` entrada → `/quiz` (5 preguntas + análisis) → `/resultado` (3 perfiles según respuestas: horas/semana y trabajo en casa; "≈ N h al año" = horas × 40 semanas, supuesto declarado) → `/solucion` (capturas REALES de la app en `app/public/funnel/`) → `/prueba-social` (solo cifras verificables; testimonios solo si existen en `TESTIMONIALS`) → `/video` (escenario reservado; botón con retardo si hay video) → `/oferta` (scroll: decisión, qué recibes, precio, garantía, FAQ, botón final + botón fijo).
+- Respuestas del quiz solo en el navegador (`profe:quiz:v1`); volver atrás las conserva; entrar a una pantalla avanzada sin quiz vuelve a `/quiz`.
+- Atribución: `utm_*`, `src`, `sck`, `fbclid`, `ttclid` se guardan al entrar y viajan al link de pago (`withAttribution`).
+- Eventos (tabla `event_log`, vía `POST /api/evento`, lista cerrada, rate-limit por IP): funnel_view, quiz_start, quiz_answer, quiz_complete, result_view, solution_view, vsl_view, offer_view, checkout_click. Verificado en base con un recorrido real. Los pasos del panel (Uso) ya usan estos nombres.
+- Configuración por variables públicas (`app/lib/funnel/config.ts`): `NEXT_PUBLIC_HOTMART_CHECKOUT_URL`, `NEXT_PUBLIC_PRICE_LABEL`, `NEXT_PUBLIC_GUARANTEE_DAYS`, `NEXT_PUBLIC_SUPPORT_EMAIL`, `NEXT_PUBLIC_VSL_URL`, `NEXT_PUBLIC_VSL_BUTTON_DELAY`. Sin link de pago el botón se ve apagado ("El pago se activa muy pronto"); sin precio dice "Precio por confirmar". Nada inventado.
+- App privada: ahora `/app`, `/app/crear`, `/app/planner`, `/app/historial`; rutas viejas redirigen. Acceso solo con sesión + cuenta activa/past_due (o dueña) validado en servidor (`lib/access.ts`); `/api/generar` exige lo mismo + tope 60 fichas/hora por cuenta. Probado: sin sesión → /login y API responde 401.
+- PDF: ahora incluye hoja de solucionario (solo docente) al final.
+- Tipos/lint/18 tests/build ✓. Capturas 375px en `docs/revisiones/embudo/` (sin desborde horizontal en las 6 pantallas).
+PENDIENTE:
+- Veredictos del revisor-visual: `docs/revisiones/embudo/{entrada,quiz,oferta}-veredicto.md` (revisar resultados y corregir).
+- Dueño: precio, moneda y modalidad; días de garantía; link de checkout; correo de soporte; video; testimonios reales (no hay usuarias aún). Páginas legales (términos/privacidad) sin crear.
+- Hotmart + webhook + cuenta automática + Resend + login solo para pagos: NO se tocó (el login actual solo admite cuentas ya creadas).
+- Variables de Supabase y de funnel aún no están en Vercel: producción no tiene el camino de venta funcionando con medición hasta subirlas y redeploy.
+- Pantallas secundarias del funnel (resultado, solución, prueba social, video) sin revisor (secundarias).
 
 ## Sesiones completadas ✅
 (ninguna cerrada aún)
