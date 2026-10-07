@@ -4,8 +4,8 @@
  * Son variables PÚBLICAS a propósito (NEXT_PUBLIC_*): nada de esto es secreto.
  */
 export const FUNNEL = {
-  /** Link de checkout de Hotmart del producto (vacío = el botón se muestra apagado). */
-  checkoutUrl: process.env.NEXT_PUBLIC_HOTMART_CHECKOUT_URL?.trim() || "",
+  /** Link de checkout de Hotmart del producto (público por diseño; la variable de entorno puede reemplazarlo). */
+  checkoutUrl: process.env.NEXT_PUBLIC_HOTMART_CHECKOUT_URL?.trim() || "https://pay.hotmart.com/V107932200S",
   /** Texto del precio tal como se cobra, ej. "US$ 9,90 / mes". Vacío = "Precio por confirmar". */
   priceLabel: process.env.NEXT_PUBLIC_PRICE_LABEL?.trim() || "",
   /** Días de garantía elegidos en Hotmart (7, 15, 21 o 30). Vacío = no se menciona un número. */
