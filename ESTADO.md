@@ -72,7 +72,7 @@ TERMINADO:
 - Tipos/lint/18 tests/build ✓. Capturas 375px en `docs/revisiones/embudo/` (sin desborde horizontal en las 6 pantallas).
 PENDIENTE:
 - Revisor-visual 1ª pasada (todas NO LISTA): entrada 27/40·12/20·copy 11/20 · quiz 29/40·14/20·copy 13/20 · oferta 27/40·14/20·copy 10/20 (veredictos en `docs/revisiones/embudo/`). Ya corregido: copy neutro en P5, barra alineada a 5 pasos, línea de "para qué", foco visible, CTA "Quiero mi semana de fichas lista", barra oculta en entrada. FALTA: escena de dolor (domingo en la noche) en el copy, mascota/anillo firma, profundidad (mesh/hairline), conteo animado de horas, CTA "Avísame cuando abra" mientras no haya link de pago, prueba real, precio y garantía con nombre (dependen del dueño). Segunda revisión pendiente.
-- Dueño: precio, moneda y modalidad; días de garantía; link de checkout; correo de soporte; video; testimonios reales (no hay usuarias aún). Páginas legales (términos/privacidad) sin crear.
+- Dueño: correo de soporte; video; testimonios reales (no hay usuarias aún). Páginas legales (términos/privacidad) sin crear.
 - Hotmart + webhook + cuenta automática + Resend + login solo para pagos: NO se tocó (el login actual solo admite cuentas ya creadas).
 - Variables de Supabase y de funnel aún no están en Vercel: producción no tiene el camino de venta funcionando con medición hasta subirlas y redeploy.
 - Pantallas secundarias del funnel (resultado, solución, prueba social, video) sin revisor (secundarias).
@@ -96,7 +96,7 @@ PENDIENTE:
 - Checklist de cierre formal + revisor-visual de las pantallas construidas (pendiente — se priorizó velocidad de construcción por pedido del usuario)
 
 ## Problemas conocidos ⚠️
-- garantia POSPUESTA (2026-10-07): el copy de `/oferta` menciona garantía solo de forma condicionada: si `NEXT_PUBLIC_GUARANTEE_DAYS` está vacío NO dice ningún número ("Compra con respaldo", devoluciones según Hotmart). FICHA-MERCADO.md §4 tiene "Prueba elegida: 0 días" y "Garantía elegida: PENDIENTE" (decisión del dueño: 7/15/21/30). Hasta que la decida y se configure en Hotmart, la página no promete ningún plazo. Bloqueante antes de vender.
+- RESUELTO 2026-10-07 (dueño): precio US$ 7 (mostrado "al mes" — confirmar periodicidad y moneda en Hotmart) y garantía 7 días (FICHA-MERCADO §1 y §4 actualizadas). Verificar que el producto en Hotmart tenga exactamente 7 días de garantía y USD 7.
 - FICHA-MERCADO creada en BORRADOR (2026-10-07): precios de la competencia y reglas de Hotmart verificados con fuente; PRECIO y GARANTÍA siguen PENDIENTES de decisión del dueño (opciones de garantía en Hotmart: 7/15/21/30 días). Reconfirmar plazos y medios de pago en el panel/checkout REAL al crear el producto.
 - Revenue del modelo NO verificado — decisión informada del usuario de avanzar sin esa validación
 - FICHA-AVATAR en BORRADOR (no APROBADA) — evita derivar copy final de venta hasta tener el OK del usuario y, si se puede, algunas fuentes reales más

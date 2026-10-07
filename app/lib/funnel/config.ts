@@ -7,9 +7,9 @@ export const FUNNEL = {
   /** Link de checkout de Hotmart del producto (público por diseño; la variable de entorno puede reemplazarlo). */
   checkoutUrl: process.env.NEXT_PUBLIC_HOTMART_CHECKOUT_URL?.trim() || "https://pay.hotmart.com/V107932200S",
   /** Texto del precio tal como se cobra, ej. "US$ 9,90 / mes". Vacío = "Precio por confirmar". */
-  priceLabel: process.env.NEXT_PUBLIC_PRICE_LABEL?.trim() || "",
-  /** Días de garantía elegidos en Hotmart (7, 15, 21 o 30). Vacío = no se menciona un número. */
-  guaranteeDays: Number(process.env.NEXT_PUBLIC_GUARANTEE_DAYS) || 0,
+  priceLabel: process.env.NEXT_PUBLIC_PRICE_LABEL?.trim() || "US$ 7 al mes",
+  /** Días de garantía elegidos en Hotmart (decisión del dueño, 2026-10-07). */
+  guaranteeDays: Number(process.env.NEXT_PUBLIC_GUARANTEE_DAYS) || 7,
   /** Correo de soporte que se muestra al final de la oferta. */
   supportEmail: process.env.NEXT_PUBLIC_SUPPORT_EMAIL?.trim() || "",
   /** URL del video de ventas (mp4 directo o embed). Vacío = escenario reservado. */

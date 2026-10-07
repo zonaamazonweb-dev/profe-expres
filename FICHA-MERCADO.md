@@ -1,6 +1,6 @@
 # FICHA DE MERCADO — Profe Exprés
 
-- Estado: BORRADOR (precio y garantía NO decididos por el dueño; el resto verificado por búsqueda web, ver fuentes)
+- Estado: BORRADOR (precio y garantía decididos por el dueño el 2026-10-07; el resto verificado por búsqueda web, ver fuentes)
 
 ## Alcance de esta ficha
 - Nicho/categoría exacta: generadores de fichas/actividades escolares con IA para docentes de primaria hispanohablantes
@@ -15,7 +15,7 @@
 - Rango observado de líderes: US$6,50 a US$12,99 por mes
 - Mediana de la categoría (mensual / anual): NO ENCONTRADO como dato publicado — se decide por criterio y se revisa el 2027-04-07
 - Ajuste por país (poder adquisitivo LATAM): NO ENCONTRADO
-- **Precio elegido para esta app:** PENDIENTE (decisión del dueño) · Desvío respecto a la mediana: n/a
+- **Precio elegido para esta app:** US$ 7 (decisión del dueño, 2026-10-07; se muestra como "al mes", periodicidad por confirmar contra el producto en Hotmart) · Desvío: por debajo del rango observado de líderes (US$ 6,50 a US$ 12,99) — dentro de él, cerca del mínimo
 - Precio por país/moneda: PENDIENTE (depende de la moneda con que se cree el producto en Hotmart)
 
 ## 2. CICLO DE DECISIÓN
@@ -33,7 +33,7 @@
 - Plazos de prueba que admite la pasarela: NO VERIFICADO en la configuración real del producto
 - Plazos de garantía que permite Hotmart: 7, 15, 21 o 30 días, elegidos por el productor | fuente: hotmart.com/es/blog/hotmart-reembolso y centro de ayuda | 2026-10-07 — reconfirmar en el panel al crear el producto
 - Proceso de reembolso: el productor tiene 5 días para responder; si no, Hotmart lo procesa; el dinero vuelve en hasta 30 días (transferencia) o 90 días (tarjeta) | fuente: misma
-- Prueba elegida: 0 días (decisión del dueño: no hay prueba gratis; se paga antes de usar) · Garantía elegida: PENDIENTE
+- Prueba elegida: 0 días (decisión del dueño: no hay prueba gratis; se paga antes de usar) · Garantía elegida: 7 días (decisión del dueño, 2026-10-07; confirmar que coincida con la configurada en Hotmart)
 - Regla dura (18): garantía > prueba → con prueba de 0 días cualquier garantía permitida (7/15/21/30) la cumple
 - ¿Desde cuándo cuenta la garantía?: desde la compra, según la fuente de Hotmart; confirmar en el panel
 

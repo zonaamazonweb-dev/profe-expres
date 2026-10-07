@@ -114,13 +114,9 @@ export function OfferView() {
         <section className="flex flex-col gap-3">
           <div className="flex items-center gap-3">
             <IconChip><ShieldCheck size={22} weight="duotone" /></IconChip>
-            <H2>{FUNNEL.guaranteeDays > 0 ? `Garantía de ${FUNNEL.guaranteeDays} días` : "Compra con respaldo"}</H2>
+            <H2>{`Garantía de ${FUNNEL.guaranteeDays} días`}</H2>
           </div>
-          <p className="text-[16px] leading-snug text-muted-foreground">
-            {FUNNEL.guaranteeDays > 0
-              ? `Pruébala con calma: si no es lo que esperabas, pides la devolución dentro de los ${FUNNEL.guaranteeDays} días desde tu compra, directamente en Hotmart.`
-              : "El pago se hace en Hotmart, que protege tu compra y gestiona las devoluciones según sus condiciones."}
-          </p>
+          <p className="text-[16px] leading-snug text-muted-foreground">{`Pruébala con calma: si no es lo que esperabas, pides la devolución dentro de los ${FUNNEL.guaranteeDays} días desde tu compra, directamente en Hotmart. El pago se hace en la página de Hotmart: aquí nunca se escriben datos de tarjeta.`}</p>
         </section>
 
         <section className="flex flex-col gap-3" aria-label="Preguntas frecuentes">
