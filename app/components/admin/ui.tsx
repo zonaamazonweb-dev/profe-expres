@@ -91,3 +91,33 @@ export function RangeFilter({ base, actual }: { base: string; actual: RangoId })
     </div>
   );
 }
+
+export interface AlertItem { id: string; tone: "malo" | "aviso" | "info"; title: string; why: string; todo: string }
+
+export function AlertsBanner({ alerts, hasData }: { alerts: AlertItem[]; hasData: boolean }) {
+  if (alerts.length === 0) {
+    return (
+      <div role="status" className="flex items-start gap-3 rounded-[20px] p-4" style={{ background: "color-mix(in oklab, #2F9E5B 10%, var(--card))", border: "1.5px solid color-mix(in oklab, #2F9E5B 30%, transparent)" }}>
+        <span className="text-[18px]" aria-hidden>✅</span>
+        <div>
+          <p className="text-[14px] font-extrabold">Todo en orden este mes</p>
+          <p className="text-[12.5px] text-muted-foreground">
+            {hasData ? "Ningún aviso necesita tu atención." : "Todavía no hay ventas ni uso suficientes para evaluar. Los avisos aparecen solos cuando algo lo necesite."}
+          </p>
+        </div>
+      </div>
+    );
+  }
+  const color = { malo: "#E5484D", aviso: "#B7791F", info: "#7B5DFB" } as const;
+  return (
+    <div className="flex flex-col gap-2" role="alert">
+      {alerts.map((a) => (
+        <div key={a.id} className="rounded-[20px] bg-card p-4" style={{ borderLeft: `5px solid ${color[a.tone]}` }}>
+          <p className="text-[14px] font-extrabold">{a.title}</p>
+          <p className="mt-1 text-[12.5px] text-muted-foreground"><b className="text-foreground">Por qué importa:</b> {a.why}</p>
+          <p className="mt-0.5 text-[12.5px] text-muted-foreground"><b className="text-foreground">Qué hacer:</b> {a.todo}</p>
+        </div>
+      ))}
+    </div>
+  );
+}

@@ -47,3 +47,17 @@ export function timeAgo(iso: string | null | undefined, now = new Date()): strin
   const d = Math.floor(h / 24);
   return d === 1 ? "ayer" : `hace ${d} días`;
 }
+
+export function monthBounds(now: number = Date.now()): { start: string; end: string } {
+  const d = new Date(now);
+  const first = new Date(Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), 1));
+  const last = new Date(Date.UTC(d.getUTCFullYear(), d.getUTCMonth() + 1, 0));
+  return { start: first.toISOString().slice(0, 10), end: last.toISOString().slice(0, 10) };
+}
+
+export function deltaText(current: number, previous: number | null): { text: string; tono: "bueno" | "malo" | "neutro" } {
+  if (previous == null || previous === 0) return { text: current > 0 ? "Sin periodo anterior para comparar" : "Sin datos del periodo anterior", tono: "neutro" };
+  const pct = ((current - previous) / previous) * 100;
+  const arrow = pct >= 0 ? "↑" : "↓";
+  return { text: `${arrow} ${Math.abs(pct).toFixed(0)}% frente al periodo anterior`, tono: pct >= 0 ? "bueno" : "malo" };
+}
