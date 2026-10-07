@@ -332,6 +332,8 @@ export interface ChannelEconomics {
   cac: number | null;
   arpu: number | null;       // ingreso mensual por clienta activa
   monthlyChurn: number | null;
+  /** Bajas en que se apoya el cálculo: con pocas, el LTV es una pista, no una cifra firme. */
+  churnSample: number;
   ltv: number | null;
   ratio: number | null;
   paybackMonths: number | null;
@@ -371,7 +373,7 @@ export function channelEconomics(args: { profiles: ProfileRow[]; txs: TxRow[]; s
     const cac = newCustomers > 0 && spend > 0 ? spend / newCustomers : null;
     const ltv = arpu != null && monthlyChurn != null && monthlyChurn > 0 ? arpu / monthlyChurn : null;
     out.push({
-      channel, currency, newCustomers, activeCustomers: active.length, spend, cac, arpu, monthlyChurn, ltv,
+      channel, currency, newCustomers, activeCustomers: active.length, spend, cac, arpu, monthlyChurn, churnSample: cancelled, ltv,
       ratio: ltv != null && cac != null ? ltv / cac : null,
       paybackMonths: cac != null && arpu != null && arpu > 0 ? cac / arpu : null,
     });

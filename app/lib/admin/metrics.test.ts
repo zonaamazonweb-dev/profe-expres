@@ -186,7 +186,7 @@ describe("avisos", () => {
       [1, 2, 3].map((n) => ({ result: "error" as const, type: "PURCHASE_APPROVED", received_at: iso(n / 10) })), NOW);
     const ids = buildAlerts({
       ...base, webhook,
-      channels: [{ channel: "ads", currency: "USD", newCustomers: 1, activeCustomers: 1, spend: 1, cac: 1, arpu: 1, monthlyChurn: 1, ltv: 0.5, ratio: 0.5, paybackMonths: 1 }],
+      channels: [{ channel: "ads", currency: "USD", newCustomers: 1, activeCustomers: 1, spend: 1, cac: 1, arpu: 1, monthlyChurn: 1, churnSample: 3, ltv: 0.5, ratio: 0.5, paybackMonths: 1 }],
       profit: [{ currency: "USD", income: 100, providerFees: 0, affiliateFees: 0, taxes: 0, ai: 0, infra: 200, email: 0, other: 0, profit: -100, margin: -1, assumptions: [] }],
       churn: { ...base.churn, voluntary: 1, involuntary: 4, involuntaryShare: 0.8 },
     }).map((a) => a.id);

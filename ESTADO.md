@@ -1,7 +1,7 @@
 # ESTADO — Profe Exprés
 Última actualización: 2026-09-25 | Sesión actual: 1
 
-⏸️ CHECKPOINT — Última acción completada: app publicada y en línea en https://profe-expres.vercel.app (GitHub `zonaamazonweb-dev/profe-expres` privado, conectado a Vercel proyecto `yessenia3/profe-expres`). Verificado en producción: las 4 pantallas cargan (200 OK) y una generación real con IA funcionó de punta a punta. Siguiente acción exacta: ninguna pendiente — la app está funcional y pública. Retomar cuando el usuario quiera más pantallas/features o la secuencia de venta (landing/onboarding/paywall/login).
+⏸️ CHECKPOINT — Panel de administración construido y verificado (18 pruebas de fórmulas, pruebas de ataque de seguridad OK, MFA activa, alta manual probada); pendiente su revisión visual independiente (capturas en docs/revisiones/admin) y subir variables de Supabase a Vercel para producción. ANÁLISIS DEL FUNNEL entregado (referencia quiz.gomezmaria.site, 10 etapas, oferta con scroll); NO se escribió código del funnel: espera el OK del usuario y 8 decisiones (precio, garantía, link Hotmart, soporte, solucionario en PDF, límite de uso, mover app a /app con protección, testimonios beta). Siguiente acción exacta: con su OK, construir el funnel público en `/` y mover la app privada a `/app`.
 
 ## Qué es esta app (3 líneas máximo)
 Generador de fichas de actividades escolares en PDF para docentes de primaria hispanohablantes (cualquier país): el profesor elige materia, tema, grado, país/currículo y tipo de preguntas, y la IA arma en un solo flujo la semana completa de fichas (no una por una), listas para imprimir. Suscripción mensual.

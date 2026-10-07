@@ -28,10 +28,10 @@ export default async function IaPage({ searchParams }: { searchParams: Promise<{
           </div>
           {ai.errors > 0 && <p className="rounded-[14px] bg-[color-mix(in_oklab,#E5484D_10%,var(--card))] p-3 text-[12.5px] font-bold">{ai.errors} de {ai.calls} llamadas fallaron en este periodo (mira «Salud»).</p>}
 
-          <Section titulo="Gasto por día"><Panel><TrendChart data={ai.series} label="Gasto IA" color="var(--accent-2)" format={(v) => formatUsd(v)} /></Panel></Section>
+          <Section titulo="Gasto por día"><Panel><TrendChart data={ai.series} label="Gasto IA" color="var(--accent-2)" format={{ kind: "usd" }} /></Panel></Section>
 
           <Section titulo="Por tipo de función">
-            <Panel><HorizontalBars label="Gasto por función" data={ai.byFeature.map((f) => ({ name: `${f.feature} (${formatInt(f.calls)})`, value: f.costUsd }))} format={(v) => formatUsd(v)} /></Panel>
+            <Panel><HorizontalBars label="Gasto por función" data={ai.byFeature.map((f) => ({ name: `${f.feature} (${formatInt(f.calls)})`, value: f.costUsd }))} format={{ kind: "usd" }} /></Panel>
           </Section>
 
           <Section titulo="Por usuaria" sub="Para detectar a quien gasta de más (límite de uso justo).">
@@ -44,7 +44,7 @@ export default async function IaPage({ searchParams }: { searchParams: Promise<{
                     <tr key={u.userId ?? "anon"}>
                       <td className="px-4 py-3 font-bold">{u.userId ? emailOf.get(u.userId) ?? "Cuenta eliminada" : "Sin cuenta (uso desde la app pública)"}</td>
                       <td className="px-3 py-3 text-right tabular-nums">{formatInt(u.calls)}</td>
-                      <td className="px-4 py-3 text-right font-extrabold tabular-nums">{formatUsd(u.costUsd)}</td>
+                      <td className="whitespace-nowrap px-4 py-3 text-right font-extrabold tabular-nums">{formatUsd(u.costUsd)}</td>
                     </tr>
                   ))}
                 </tbody>

@@ -36,7 +36,7 @@ export default async function UsuariasPage({ searchParams }: { searchParams: Pro
 
   const activas = perfiles.filter((p) => p.status === "active" && p.role !== "admin").length;
   const total = perfiles.filter((p) => p.role !== "admin").length;
-  const activasSemana = seenWithinDays(perfiles, 7);
+  const activasSemana = seenWithinDays(perfiles.filter((p) => p.role !== "admin"), 7);
 
   return (
     <div className="flex flex-col gap-6">

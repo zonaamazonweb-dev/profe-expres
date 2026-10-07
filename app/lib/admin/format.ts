@@ -25,7 +25,7 @@ export function formatUsd(amount: number): string {
 }
 
 export function formatPct(value: number | null, digits = 0): string {
-  return value == null ? "Sin datos" : `${(value * 100).toFixed(digits)}%`;
+  return value == null ? "Sin datos" : new Intl.NumberFormat("es", { style: "percent", maximumFractionDigits: digits, minimumFractionDigits: digits }).format(value);
 }
 
 export function formatInt(value: number): string {

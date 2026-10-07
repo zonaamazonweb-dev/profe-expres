@@ -46,6 +46,7 @@ export default async function NegocioPage({ searchParams }: { searchParams: Prom
                     <div key={k}><dt className="text-[10.5px] font-extrabold uppercase tracking-wide text-muted-foreground">{k}</dt><dd className="mt-0.5 font-extrabold tabular-nums">{v}</dd></div>
                   ))}
                 </dl>
+                {c.ltv != null && c.churnSample < 5 && <p className="mt-2 text-[12px] font-bold" style={{ color: "#B7791F" }}>Poca muestra: el «total que deja» se apoya en solo {c.churnSample} baja{c.churnSample === 1 ? "" : "s"}. Tómalo como pista, no como cifra firme.</p>}
                 {c.monthlyChurn == null && <p className="mt-2 text-[12px] text-muted-foreground">El «total que deja» necesita al menos una baja para calcularse; mientras nadie cancele no se inventa.</p>}
               </Panel>
             ))}
@@ -66,7 +67,7 @@ export default async function NegocioPage({ searchParams }: { searchParams: Prom
                     <tr key={s.id}>
                       <td className="px-4 py-3 font-bold">{s.channel}{s.note ? <span className="font-normal text-muted-foreground"> · {s.note}</span> : null}</td>
                       <td className="px-3 py-3 text-muted-foreground">{formatDate(s.period_start)} – {formatDate(s.period_end)}</td>
-                      <td className="px-3 py-3 text-right font-extrabold">{formatMoney(s.amount_minor, s.currency)}</td>
+                      <td className="whitespace-nowrap px-3 py-3 text-right font-extrabold">{formatMoney(s.amount_minor, s.currency)}</td>
                       <td className="px-4 py-3 text-right">
                         {admin.mfaVerified && (
                           <form action={deleteEntry}><input type="hidden" name="table" value="acquisition_spend" /><input type="hidden" name="id" value={s.id} />

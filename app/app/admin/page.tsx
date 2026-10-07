@@ -2,7 +2,7 @@ import Link from "next/link";
 import { adminPageData } from "@/lib/admin/page-data";
 import { AlertsBanner, PageTitle, Panel, RangeFilter, Section, SinDatos, Stat } from "@/components/admin/ui";
 import { TrendChart } from "@/components/admin/charts";
-import { deltaText, formatInt, formatMoney, formatPct } from "@/lib/admin/format";
+import { deltaText, formatInt, formatMoney, formatPct, formatUsd } from "@/lib/admin/format";
 import { activation, mainActionCounts, productUsers, ACTION_EVENT } from "@/lib/admin/metrics";
 
 export default async function ResumenPage({ searchParams }: { searchParams: Promise<{ rango?: string }> }) {
@@ -55,15 +55,15 @@ export default async function ResumenPage({ searchParams }: { searchParams: Prom
       <div className="grid gap-3 sm:grid-cols-3">
         <Stat label="Fichas creadas en el periodo" value={o.events.some((e) => e.type === ACTION_EVENT) ? formatInt(o.events.filter((e) => e.type === ACTION_EVENT && new Date(e.created_at) >= o.range.start).length) : null}
           insight={`Hoy: ${actions.today} · 7 días: ${actions.week}`} />
-        <Stat label="Gasto en IA" value={o.ai.calls > 0 ? `${o.ai.totalUsd.toFixed(2)} USD` : null}
-          insight={o.ai.calls > 0 ? `${formatInt(o.ai.calls)} llamadas · hoy ${o.ai.todayUsd.toFixed(2)} USD` : "Sin llamadas a la IA en este periodo."} />
+        <Stat label="Gasto en IA" value={o.ai.calls > 0 ? formatUsd(o.ai.totalUsd) : null}
+          insight={o.ai.calls > 0 ? `${formatInt(o.ai.calls)} llamadas · hoy ${formatUsd(o.ai.todayUsd)}` : "Sin llamadas a la IA en este periodo."} />
         <Stat label="Usuarias que ya hicieron su primera ficha" value={act.rate == null ? null : formatPct(act.rate)}
           insight={act.rate == null ? "Hace falta que haya usuarias con cuenta." : `${act.activated} de ${act.total}`} />
       </div>
 
       <Section titulo="Ventas por día">
         {main && main.sales > 0 ? (
-          <Panel><TrendChart data={main.series} label={`Ventas ${main.currency}`} format={(v) => formatMoney(Math.round(v), main.currency).replace(/\.00$/, "")} /></Panel>
+          <Panel><TrendChart data={main.series} label={`Ventas ${main.currency}`} format={{ kind: "money", currency: main.currency }} /></Panel>
         ) : <SinDatos>Cuando entren las primeras ventas por Hotmart, aquí ves cómo evolucionan.</SinDatos>}
       </Section>
 

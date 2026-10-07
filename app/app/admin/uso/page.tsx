@@ -51,7 +51,7 @@ export default async function UsoPage({ searchParams }: { searchParams: Promise<
           <Stat label="Últimos 30 días" value={o.events.some((e) => e.type === ACTION_EVENT) ? formatInt(actions.month) : null} />
         </div>
         <div className="mt-3">
-          {totalActions > 0 ? <Panel><TrendChart data={series} label="Fichas por día" format={(v) => formatInt(Math.round(v))} /></Panel>
+          {totalActions > 0 ? <Panel><TrendChart data={series} label="Fichas por día" format={{ kind: "int" }} /></Panel>
             : <SinDatos>Sin fichas creadas en este periodo.</SinDatos>}
         </div>
       </Section>

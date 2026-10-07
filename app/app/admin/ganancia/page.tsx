@@ -9,6 +9,7 @@ const KIND: Record<string, string> = { infra: "Servidores", email: "Emails", tax
 export default async function GananciaPage({ searchParams }: { searchParams: Promise<{ rango?: string }> }) {
   const { admin, rango, o } = await adminPageData(searchParams);
   const mes = monthBounds();
+  const neg = (n: number) => (n === 0 ? 0 : -n);
   const moneda = o.profit[0]?.currency ?? "USD";
 
   return (
@@ -20,21 +21,21 @@ export default async function GananciaPage({ searchParams }: { searchParams: Pro
       ) : o.profit.map((p) => {
         const filas: Array<{ label: string; value: number | null; tono?: "malo" }> = [
           { label: "Cobrado (neto de reembolsos)", value: p.income },
-          { label: "Tarifa de Hotmart", value: -p.providerFees },
-          { label: "Comisión de afiliados", value: -p.affiliateFees },
-          { label: "Impuestos", value: -p.taxes },
-          { label: "Inteligencia artificial", value: p.ai == null ? null : -p.ai },
-          { label: "Servidores", value: -p.infra },
-          { label: "Emails", value: -p.email },
-          { label: "Otros costos", value: -p.other },
+          { label: "Tarifa de Hotmart", value: neg(p.providerFees) },
+          { label: "Comisión de afiliados", value: neg(p.affiliateFees) },
+          { label: "Impuestos", value: neg(p.taxes) },
+          { label: "Inteligencia artificial", value: p.ai == null ? null : neg(p.ai) },
+          { label: "Servidores", value: neg(p.infra) },
+          { label: "Emails", value: neg(p.email) },
+          { label: "Otros costos", value: neg(p.other) },
         ];
         return (
           <section key={p.currency} className="flex flex-col gap-3" aria-label={`Ganancia en ${p.currency}`}>
             <h2 className="font-display text-[20px] font-extrabold">{p.currency}</h2>
             <div className="grid gap-3 sm:grid-cols-3">
-              <Stat hero label="Facturaste" value={formatMoney(p.income, p.currency)} />
+              <Stat hero label="Cobrado (sin reembolsos)" value={formatMoney(p.income, p.currency)} />
               <Stat hero label="Te quedaron limpios" badge="Estimación" value={formatMoney(p.profit, p.currency)} tono={p.profit <= 0 ? "malo" : "bueno"}
-                insight={`Facturaste ${formatMoney(p.income, p.currency)} y te quedaron ${formatMoney(p.profit, p.currency)} limpios.`} />
+                insight={`De ${formatMoney(p.income, p.currency)} cobrados, te quedaron ${formatMoney(p.profit, p.currency)} limpios.`} />
               <Stat hero label="Margen" value={p.margin == null ? null : formatPct(p.margin)} tono={p.margin != null && p.margin < 0.4 ? "aviso" : "neutro"}
                 insight={p.margin == null ? undefined : p.margin >= 0.7 ? "Sano." : p.margin >= 0.4 ? "Aceptable, pero vigila los costos." : "Bajo: cada venta deja poco."} />
             </div>
@@ -45,7 +46,7 @@ export default async function GananciaPage({ searchParams }: { searchParams: Pro
                   {filas.map((f) => (
                     <tr key={f.label}>
                       <td className="px-4 py-2.5 font-bold">{f.label}</td>
-                      <td className="px-4 py-2.5 text-right font-extrabold tabular-nums" style={{ color: f.value != null && f.value < 0 ? "#E5484D" : undefined }}>
+                      <td className="whitespace-nowrap px-4 py-2.5 text-right font-extrabold tabular-nums" style={{ color: f.value != null && f.value < 0 ? "#E5484D" : undefined }}>
                         {f.value == null ? <span className="text-muted-foreground">No se pudo restar</span> : formatMoney(f.value, p.currency)}
                       </td>
                       <td className="w-16 px-4 py-2.5 text-right text-[12px] text-muted-foreground">{f.value != null && p.income > 0 ? formatPct(Math.abs(f.value) / p.income) : ""}</td>
@@ -82,7 +83,7 @@ export default async function GananciaPage({ searchParams }: { searchParams: Pro
                     <tr key={c.id}>
                       <td className="px-4 py-3 font-bold">{KIND[c.kind]}{c.note ? <span className="font-normal text-muted-foreground"> · {c.note}</span> : null}</td>
                       <td className="px-3 py-3 text-muted-foreground">{formatDate(c.period_start)} – {formatDate(c.period_end)}</td>
-                      <td className="px-3 py-3 text-right font-extrabold">{formatMoney(c.amount_minor, c.currency)}</td>
+                      <td className="whitespace-nowrap px-3 py-3 text-right font-extrabold">{formatMoney(c.amount_minor, c.currency)}</td>
                       <td className="px-4 py-3 text-right">
                         {admin.mfaVerified && (
                           <form action={deleteEntry}><input type="hidden" name="table" value="cost_entries" /><input type="hidden" name="id" value={c.id} />

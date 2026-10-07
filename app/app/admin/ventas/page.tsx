@@ -28,7 +28,7 @@ export default async function VentasPage({ searchParams }: { searchParams: Promi
                 <Stat label="Neto del periodo" value={formatMoney(s.net, s.currency)} />
                 <Stat label="Compras" value={formatInt(s.sales)} insight={s.sales > 0 ? `Ticket promedio ${formatMoney(Math.round(s.gross / s.sales), s.currency)}` : undefined} />
               </div>
-              <Panel><TrendChart data={s.series} label={`Ventas ${s.currency}`} format={(v) => formatMoney(Math.round(v), s.currency).replace(/\.00$/, "")} /></Panel>
+              <Panel><TrendChart data={s.series} label={`Ventas ${s.currency}`} format={{ kind: "money", currency: s.currency }} /></Panel>
               <p className="text-[12px] text-muted-foreground">«Cobrado» es la caja del periodo. Un plan anual entra completo aquí, pero en el ingreso mensual recurrente se reparte en 12 meses.</p>
             </section>
           );
@@ -69,7 +69,7 @@ export default async function VentasPage({ searchParams }: { searchParams: Promi
                     <td className="px-4 py-3 text-muted-foreground">{formatDate(t.occurred_at)}</td>
                     <td className="px-3 py-3 font-bold">{t.economic_kind === "sale" ? "Venta" : t.economic_kind === "refund" ? "Reembolso" : "Contracargo"}</td>
                     <td className="px-3 py-3">{t.source ?? "directo"}</td>
-                    <td className="px-4 py-3 text-right font-extrabold" style={{ color: t.economic_kind === "sale" ? undefined : "#E5484D" }}>
+                    <td className="whitespace-nowrap px-4 py-3 text-right font-extrabold" style={{ color: t.economic_kind === "sale" ? undefined : "#E5484D" }}>
                       {t.economic_kind === "sale" ? "" : "− "}{formatMoney(t.amount_minor, t.currency)}
                     </td>
                   </tr>
