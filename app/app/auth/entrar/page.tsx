@@ -1,5 +1,6 @@
 import { redirect } from "next/navigation";
-import { Sparkle, ArrowRight } from "@phosphor-icons/react/dist/ssr";
+import { Sparkle } from "@phosphor-icons/react/dist/ssr";
+import { EntrarButton } from "./EntrarButton";
 import { entrar } from "./actions";
 
 export const metadata = { title: "Entrar — Profe Exprés", robots: { index: false } };
@@ -24,10 +25,7 @@ export default async function Page({ searchParams }: { searchParams: Promise<{ t
           <input type="hidden" name="token_hash" value={token_hash} />
           <input type="hidden" name="type" value={type} />
           <input type="hidden" name="next" value={next ?? "/app"} />
-          <button type="submit" className="flex min-h-14 w-full items-center justify-center gap-2 rounded-[14px] text-[17px] font-extrabold text-white"
-            style={{ background: "var(--primary)", boxShadow: "0 12px 28px -10px color-mix(in oklab, var(--primary) 55%, transparent)" }}>
-            Entrar a mi cuenta <ArrowRight size={18} weight="bold" />
-          </button>
+          <EntrarButton />
         </form>
       </div>
     </main>
