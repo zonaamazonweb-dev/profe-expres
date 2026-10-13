@@ -92,7 +92,7 @@ PENDIENTE:
 ## Dominio propio (2026-10-13)
 - App servida en https://noventadesarrollopro.online (y www) desde el proyecto Vercel `profe-expres`; DNS en Namecheap BasicDNS: `A @ 76.76.21.21`, `CNAME www cname.vercel-dns.com.` (se conservan MX/SPF de reenvío de Namecheap y los registros de Resend en `tx`). `profe-expres.vercel.app` sigue activo como respaldo.
 - Supabase: site_url = https://noventadesarrollopro.online; lista de redirecciones incluye ambos dominios, vercel.app y localhost. Los correos de acceso apuntan al dominio propio.
-- Webhook de Hotmart: la URL registrada hoy es la de vercel.app (sigue funcionando); opcional cambiarla a https://noventadesarrollopro.online/api/webhooks/hotmart.
+- Webhook de Hotmart: URL cambiada a https://noventadesarrollopro.online/api/webhooks/hotmart (2026-10-13); prueba desde Hotmart respondió 200. El hottok no cambió.
 - `aprende360.online` descartado (vencido).
 
 ## Sesiones completadas ✅
