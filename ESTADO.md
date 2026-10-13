@@ -89,6 +89,12 @@ PENDIENTE:
 - ✅ 2026-10-13: SMTP propio ACTIVO en Supabase (smtp.resend.com:465, remitente acceso@tx.noventadesarrollopro.online, tope 60 correos/hora), plantilla del correo en español con enlace a `/auth/entrar` aplicada, `RESEND_API_KEY` en Vercel (Sensitive). Supabase aceptó un envío real al correo de la dueña; falta que ella confirme que llegó (bandeja/spam) y que el botón entra desde Gmail del celular. Archivo temporal con la clave borrado.
 - Hecho: enlace del correo → `/auth/entrar` (botón; solo se gasta al pulsar, no cuando Gmail lo revisa) · enlace vencido muestra aviso claro y deja pedir otro · al aprobarse una compra se pide el correo de acceso; si falla, la venta y la cuenta igual quedan guardadas (probado) y el fallo se registra (`acceso_correo_fallido`, error en Salud).
 
+## Dominio propio (2026-10-13)
+- App servida en https://noventadesarrollopro.online (y www) desde el proyecto Vercel `profe-expres`; DNS en Namecheap BasicDNS: `A @ 76.76.21.21`, `CNAME www cname.vercel-dns.com.` (se conservan MX/SPF de reenvío de Namecheap y los registros de Resend en `tx`). `profe-expres.vercel.app` sigue activo como respaldo.
+- Supabase: site_url = https://noventadesarrollopro.online; lista de redirecciones incluye ambos dominios, vercel.app y localhost. Los correos de acceso apuntan al dominio propio.
+- Webhook de Hotmart: la URL registrada hoy es la de vercel.app (sigue funcionando); opcional cambiarla a https://noventadesarrollopro.online/api/webhooks/hotmart.
+- `aprende360.online` descartado (vencido).
+
 ## Sesiones completadas ✅
 (ninguna cerrada aún)
 
