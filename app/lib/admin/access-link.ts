@@ -18,5 +18,5 @@ export async function createAccessLink(email: string): Promise<string | null> {
   const hashed = data?.properties?.hashed_token;
   if (error || !hashed) return null;
   const origin = await siteOrigin();
-  return `${origin}/auth/confirm?token_hash=${encodeURIComponent(hashed)}&type=magiclink&next=${encodeURIComponent("/")}`;
+  return `${origin}/auth/entrar?token_hash=${encodeURIComponent(hashed)}&type=magiclink&next=${encodeURIComponent("/app")}`;
 }

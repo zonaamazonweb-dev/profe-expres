@@ -1,5 +1,6 @@
 import "server-only";
 import { createServiceClient } from "@/lib/supabase/admin";
+import { sendAccessEmail } from "./access-mail";
 import { ECONOMIC_KIND, EVENT_STATUS, canTransition, type HotmartEvent, type MembershipStatus } from "./payload";
 
 export type Outcome = "applied" | "duplicate" | "illegal" | "error";
@@ -54,6 +55,7 @@ export async function applyEvent(ev: HotmartEvent): Promise<Outcome> {
   // 1) Cuenta: solo una compra APROBADA puede crearla; el resto actúa sobre una cuenta existente.
   let profile: ProfileRow | null = null;
   let userId: string | null = null;
+  let wasCreated = false;
   const existing = await service.from("profiles").select("id,status,first_paid_at").ilike("email", ev.email).maybeSingle();
   if (existing.data) {
     profile = existing.data as ProfileRow;
@@ -62,6 +64,7 @@ export async function applyEvent(ev: HotmartEvent): Promise<Outcome> {
     const made = await findOrCreateUser(service, ev.email, ev.name);
     if (!made) return "error";
     userId = made.id;
+    wasCreated = made.created;
     const again = await service.from("profiles").select("id,status,first_paid_at").eq("id", userId).maybeSingle();
     profile = (again.data as ProfileRow | null) ?? null;
   }
@@ -127,6 +130,8 @@ export async function applyEvent(ev: HotmartEvent): Promise<Outcome> {
       const { error } = await service.from("profiles").update(update).eq("id", userId);
       if (error) return "error";
       await recordTransition(service, userId, profile.status, target, churn);
+      // Correo de acceso: a la cuenta recién creada o a quien vuelve a pagar tras haber caído. Si falla, la venta ya quedó.
+      if (target === "active" && (wasCreated || profile.status !== "active")) await sendAccessEmail(ev.email, userId);
     }
   }
 

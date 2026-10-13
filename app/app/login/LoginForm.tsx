@@ -12,7 +12,7 @@ export function LoginForm({ next, errorEnlace }: { next: string; errorEnlace: bo
 
   const enPasoCodigo = emailState.step === "code" && codeState.step !== "email";
   const email = codeState.email ?? emailState.email ?? "";
-  const mensaje = errorEnlace && !enPasoCodigo ? "El enlace no funcionó o venció. Pide uno nuevo." : enPasoCodigo ? (codeState.message ?? emailState.message) : emailState.message;
+  const mensaje = errorEnlace && !enPasoCodigo ? "Ese enlace ya se usó o venció (duran 15 minutos y sirven una sola vez). Escribe tu correo y te enviamos uno nuevo." : enPasoCodigo ? (codeState.message ?? emailState.message) : emailState.message;
 
   return (
     <div className="w-full max-w-sm rounded-[24px] bg-card p-6 shadow-[0_18px_40px_-24px_rgb(123_93_251_/_0.45)]">
