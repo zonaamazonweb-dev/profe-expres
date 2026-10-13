@@ -30,9 +30,11 @@ export async function entrar(formData: FormData) {
   let userId: string | null = null;
   try {
     const supabase = await createSessionClient();
-    const { data, error } = await supabase.auth.verifyOtp({ token_hash: tokenHash, type });
-    ok = !error && Boolean(data.user);
-    userId = data.user?.id ?? null;
+    // Según cómo se pidió el correo, Supabase marca el enlace como "email" o "magiclink": se prueba el indicado y, si no, el otro.
+    for (const t of [type, ...TIPOS.filter((x) => x !== type)]) {
+      const { data, error } = await supabase.auth.verifyOtp({ token_hash: tokenHash, type: t });
+      if (!error && data.user) { ok = true; userId = data.user.id; break; }
+    }
   } catch {
     ok = false;
   }
