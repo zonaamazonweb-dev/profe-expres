@@ -1,2 +1,5 @@
 .vercel
 .DS_Store
+
+# clave temporal (nunca se sube)
+CLAVE-RESEND.txt

@@ -86,7 +86,7 @@ PENDIENTE:
 
 ## Correos de acceso (2026-10-13)
 - Dominio de envío: `tx.noventadesarrollopro.online` VERIFICADO en Resend (DNS comprobado desde 3 servidores). Remitente previsto: `Profe Exprés <acceso@tx.noventadesarrollopro.online>`. (`aprende360.online` se descartó: estaba vencido.)
-- ❌ PENDIENTE: el SMTP propio NO está activo en Supabase (smtp_host vacío; el envío sigue limitado a 2 correos/hora por el proveedor por defecto: error `over_email_send_rate_limit` visto en producción) y `RESEND_API_KEY` no está en Vercel. Sin SMTP propio Supabase no deja cambiar la plantilla del correo. Plan: la dueña pega la clave de Resend en `app/.env.local` como `RESEND_API_KEY=...` (sin enviarla por chat) → se configura SMTP + plantilla en español (`scratchpad/template.html`, enlace a `/auth/entrar`) + variable en Vercel.
+- ✅ 2026-10-13: SMTP propio ACTIVO en Supabase (smtp.resend.com:465, remitente acceso@tx.noventadesarrollopro.online, tope 60 correos/hora), plantilla del correo en español con enlace a `/auth/entrar` aplicada, `RESEND_API_KEY` en Vercel (Sensitive). Supabase aceptó un envío real al correo de la dueña; falta que ella confirme que llegó (bandeja/spam) y que el botón entra desde Gmail del celular. Archivo temporal con la clave borrado.
 - Hecho: enlace del correo → `/auth/entrar` (botón; solo se gasta al pulsar, no cuando Gmail lo revisa) · enlace vencido muestra aviso claro y deja pedir otro · al aprobarse una compra se pide el correo de acceso; si falla, la venta y la cuenta igual quedan guardadas (probado) y el fallo se registra (`acceso_correo_fallido`, error en Salud).
 
 ## Sesiones completadas ✅
